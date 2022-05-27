@@ -12,7 +12,6 @@ export const getIngredients = () => {
         .then(res => {
             return res.data
         })
-        .catch(err => console.log(err))
 }
 
 const checkResult = (res) => {

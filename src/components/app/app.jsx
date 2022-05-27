@@ -3,12 +3,12 @@ import {getIngredients} from "../../utils/api";
 
 import styles from './app.module.css';
 
-import Header from "../header/header";
+import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
-import Info from "../info/info";
-import Order from "../order/order";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import OrderDetails from "../order-details/order-details";
 
 function App() {
     const [openOrder, setOpenOrder] = React.useState(false);
@@ -37,27 +37,17 @@ function App() {
     }, [ingredients]);
 
     React.useEffect(() => {
-        getIngredients().then(r => {
-            setIngredients(r);
-            setSelected(r[0])
-        })
+        getIngredients()
+            .then(ingredients => {
+                setIngredients(ingredients);
+                setSelected(ingredients[0])
+            })
+            .catch(err => console.log(err))
     }, []);
-
-    React.useEffect(() => {
-        const closeByEsc = (evt) => {
-            if (evt.key === 'Escape') {
-             closeAllModals();
-            }
-        }
-
-        document.addEventListener('keydown', closeByEsc)
-
-        return () => document.removeEventListener('keydown', closeByEsc)
-    });
 
     return (
         <div className={styles.app}>
-            <Header/>
+            <AppHeader/>
             <main className={styles.main}>
                 <BurgerIngredients openModal={setOpenInfo} setSelected={setSelected} bun={bun} sauce={sauce}
                                    main={main}/>
@@ -66,13 +56,13 @@ function App() {
 
             {openOrder ?
                 (<Modal setIsOpen={setOpenOrder} isOpen={openOrder} close={closeAllModals}>
-                    <Info />
+                    <IngredientDetails/>
                 </Modal>)
                 : null}
 
             {openInfo ?
                 (<Modal setIsOpen={setOpenInfo} isOpen={openInfo} close={closeAllModals}>
-                    <Order selected={selected}/>
+                    <OrderDetails selected={selected}/>
                 </Modal>)
                 : null}
         </div>

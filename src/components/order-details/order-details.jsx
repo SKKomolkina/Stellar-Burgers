@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-import styles from './order.module.css';
+import styles from './order-details.module.css';
 
-const Order = ({selected}) => {
+const OrderDetails = ({selected}) => {
     return (
         <div className={`${styles.order} pl-10 pr-10 pt-15 pb-15`}>
             <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
@@ -31,8 +31,8 @@ const Order = ({selected}) => {
     )
 }
 
-Order.propTypes = {
+OrderDetails.propTypes = {
     selected: PropTypes.object,
 }
 
-export default Order;
+export default OrderDetails;

@@ -1,7 +1,7 @@
-import styles from './info.module.css';
+import styles from './ingredient-details.module.css';
 import done from "../../images/done.svg";
 
-const Info = () => {
+const IngredientDetails = () => {
     return (
         <div className={`${styles.info} pb-30 pt-30`}>
             <h2 className={`${styles.title} text text_type_digits-large`}>034536</h2>
@@ -13,4 +13,4 @@ const Info = () => {
     )
 }
 
-export default Info;
+export default IngredientDetails;

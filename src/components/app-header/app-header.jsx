@@ -1,12 +1,11 @@
 import React from "react";
 
-import styles from './header.module.css';
+import styles from './app-header.module.css';
 
 import NavItem from "../nav-item/nav-item";
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
-const Header = () => {
-
+const AppHeader = () => {
     return (
         <header className={`${styles.header}`}>
             <div className={styles.wrapper}>
@@ -31,4 +30,4 @@ const Header = () => {
     )
 }
 
-export default Header;
+export default AppHeader;

@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import styles from './nav-item.module.css';
 
 const NavItem = ({children, text, }) => {
@@ -9,6 +11,11 @@ const NavItem = ({children, text, }) => {
             </a>
         </div>
     )
+}
+
+NavItem.prototype = {
+    children: PropTypes.element,
+    text: PropTypes.string,
 }
 
 export default NavItem;

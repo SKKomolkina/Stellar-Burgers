@@ -6,6 +6,22 @@ body {
   margin: 0;
 
   /*overflow: hidden;*/
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: #2F2F37;
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  border: transparent;
 }
