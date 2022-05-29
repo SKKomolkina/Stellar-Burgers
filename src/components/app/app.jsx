@@ -7,8 +7,8 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
     const [openOrder, setOpenOrder] = React.useState(false);
@@ -56,13 +56,13 @@ function App() {
 
             {openOrder ?
                 (<Modal setIsOpen={setOpenOrder} isOpen={openOrder} close={closeAllModals}>
-                    <IngredientDetails/>
+                    <OrderDetails/>
                 </Modal>)
                 : null}
 
             {openInfo ?
                 (<Modal setIsOpen={setOpenInfo} isOpen={openInfo} close={closeAllModals}>
-                    <OrderDetails selected={selected}/>
+                    <IngredientDetails selected={selected}/>
                 </Modal>)
                 : null}
         </div>

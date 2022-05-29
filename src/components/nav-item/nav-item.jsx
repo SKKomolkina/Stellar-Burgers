@@ -14,7 +14,7 @@ const NavItem = ({children, text, }) => {
 }
 
 NavItem.prototype = {
-    children: PropTypes.element,
+    children: PropTypes.element.isRequired,
     text: PropTypes.string,
 }
 

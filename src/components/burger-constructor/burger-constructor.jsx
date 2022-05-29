@@ -62,10 +62,10 @@ const BurgerConstructor = ({selected, sauce, main, openModal}) => {
 }
 
 BurgerConstructor.propTypes = {
-    selected: PropTypes.object,
-    sauce: PropTypes.array,
-    main: PropTypes.array,
-    openModal: PropTypes.func,
+    selected: PropTypes.object.isRequired,
+    sauce: PropTypes.array.isRequired,
+    main: PropTypes.array.isRequired,
+    openModal: PropTypes.func.isRequired,
 }
 
 export default BurgerConstructor;

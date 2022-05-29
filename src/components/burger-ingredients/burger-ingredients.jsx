@@ -21,11 +21,11 @@ const BurgerIngredients = ({bun, main, sauce, setSelected, openModal}) => {
 }
 
 BurgerIngredients.propTypes = {
-    bun: PropTypes.array,
-    main: PropTypes.array,
-    sauce: PropTypes.array,
-    setSelected: PropTypes.func,
-    openModal: PropTypes.func,
+    bun: PropTypes.array.isRequired,
+    main: PropTypes.array.isRequired,
+    sauce: PropTypes.array.isRequired,
+    setSelected: PropTypes.func.isRequired,
+    openModal: PropTypes.func.isRequired,
 }
 
 export default BurgerIngredients;

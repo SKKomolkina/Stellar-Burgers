@@ -1,38 +1,16 @@
-import PropTypes from "prop-types";
-
 import styles from './order-details.module.css';
+import done from "../../images/done.svg";
 
-const OrderDetails = ({selected}) => {
+const OrderDetails = () => {
     return (
-        <div className={`${styles.order} pl-10 pr-10 pt-15 pb-15`}>
-            <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
-            <img src={selected.image_large} alt={selected.name} />
-            <p className='text text_type_main-medium mt-4 mb-8'>{selected.name}</p>
-
-            <ul className={styles.description}>
-                <li className={styles.item}>
-                    <p className='text text_type_main-default text_color_inactive'>Калории,ккал</p>
-                    <p className='text text_type_main-default text_color_inactive'>{selected.calories}</p>
-                </li>
-                <li className={styles.item}>
-                    <p className='text text_type_main-default text_color_inactive'>Белки, г</p>
-                    <p className='text text_type_main-default text_color_inactive'>{selected.proteins}</p>
-                </li>
-                <li className={styles.item}>
-                    <p className='text text_type_main-default text_color_inactive'>Жиры, г</p>
-                    <p className='text text_type_main-default text_color_inactive'>{selected.fat}</p>
-                </li>
-                <li className={styles.item}>
-                    <p className='text text_type_main-default text_color_inactive'>Углеводы, г</p>
-                    <p className='text text_type_main-default text_color_inactive'>{selected.carbohydrates}</p>
-                </li>
-            </ul>
+        <div className={`${styles.info} pb-30 pt-30`}>
+            <h2 className={`${styles.title} text text_type_digits-large`}>034536</h2>
+            <p className='text text_type_main-default mt-8'>идентификатор заказа</p>
+            <img className='mt-15 mb-15' src={done} alt=''/>
+            <p className='text text_type_main-small mb-2'>Ваш заказ начали готовить</p>
+            <p className='text text_type_main-small text_color_inactive'>Дождитесь готовности на орбитальной станции</p>
         </div>
     )
-}
-
-OrderDetails.propTypes = {
-    selected: PropTypes.object,
 }
 
 export default OrderDetails;

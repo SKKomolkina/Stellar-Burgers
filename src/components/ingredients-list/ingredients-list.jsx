@@ -33,9 +33,9 @@ const IngredientsList = ({title, ingredientsList, setSelected, openModal}) => {
 
 IngredientsList.propTypes = {
     title: PropTypes.string,
-    ingredientsList: PropTypes.array,
-    setSelected: PropTypes.func,
-    openModal: PropTypes.func,
+    ingredientsList: PropTypes.array.isRequired,
+    setSelected: PropTypes.func.isRequired,
+    openModal: PropTypes.func.isRequired,
 }
 
 export default IngredientsList;
