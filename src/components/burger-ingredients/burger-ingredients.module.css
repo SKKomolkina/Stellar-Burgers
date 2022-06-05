@@ -1,0 +1,17 @@
+.main {
+    width: 600px;
+    margin-top: 40px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.list {
+    max-height: 664px;
+    margin: 0;
+    padding: 0;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+    list-style-type: none;
+}
