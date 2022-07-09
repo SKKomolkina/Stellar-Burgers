@@ -1,7 +1,10 @@
 import styles from './order-details.module.css';
 import done from "../../images/done.svg";
+import {useSelector} from "react-redux";
 
 const OrderDetails = () => {
+    // const {selected} = useSelector(store => store.selectedIngredient);
+
     return (
         <div className={`${styles.info} pb-30 pt-30`}>
             <h2 className={`${styles.title} text text_type_digits-large`}>034536</h2>

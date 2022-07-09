@@ -1,12 +1,18 @@
 import PropTypes from "prop-types";
 
 import styles from './ingredient-details.module.css';
+import {useSelector} from "react-redux";
 
-const IngredientDetails = ({selected}) => {
+const IngredientDetails = () => {
+    const {selected} = useSelector(state => ({
+        ...state,
+        selected: state.ingredients.selectedIngredient,
+    }));
+
     return (
         <div className={`${styles.order} pl-10 pr-10 pt-15 pb-15`}>
             <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
-            <img src={selected.image_large} alt={selected.name} />
+            <img src={selected.image} alt={selected.name} />
             <p className='text text_type_main-medium mt-4 mb-8'>{selected.name}</p>
 
             <ul className={styles.description}>
@@ -32,7 +38,6 @@ const IngredientDetails = ({selected}) => {
 }
 
 IngredientDetails.propTypes = {
-    selected: PropTypes.object.isRequired,
 }
 
 export default IngredientDetails;
