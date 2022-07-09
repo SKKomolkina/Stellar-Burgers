@@ -1,6 +1,5 @@
 import styles from './order-details.module.css';
 import done from "../../images/done.svg";
-import {useSelector} from "react-redux";
 
 const OrderDetails = () => {
     // const {selected} = useSelector(store => store.selectedIngredient);

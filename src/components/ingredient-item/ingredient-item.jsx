@@ -1,16 +1,15 @@
 import styles from "./ingredient-item.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useDrag} from "react-dnd";
-import {addBun, addIngredient, removeIngredient} from "../../services/actions/constructor";
 import {getSelectedItem} from "../../services/actions/ingredients";
 
 const IngredientItem = ({item, openModal, count}) => {
     const dispatch = useDispatch();
-    const { ingredients, bun } = useSelector(store => store.orderConstructor)
+    // const { ingredients, bun } = useSelector(store => store.orderConstructor)
 
-    const [{opacity}, dragRef] = useDrag({
+    const [, dragRef] = useDrag({
         type: 'ingredient',
         item: item,
     })

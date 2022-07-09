@@ -1,5 +1,5 @@
 import styles from "../burger-constructor/burger-constructor.module.css";
-import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {useDispatch} from "react-redux";
 import {useRef} from "react";

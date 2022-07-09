@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import React, {useRef, useState} from "react";
+import React, {useRef} from "react";
 import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {v4 as uuidv4} from 'uuid';

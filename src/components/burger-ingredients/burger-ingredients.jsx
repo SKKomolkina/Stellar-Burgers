@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import React, {useMemo, useState, useEffect} from "react";
+import React, {useState} from "react";
 import {useInView} from "react-intersection-observer";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 import styles from './burger-ingredients.module.css';
 

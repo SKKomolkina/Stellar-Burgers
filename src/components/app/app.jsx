@@ -1,7 +1,7 @@
 import React from "react";
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {DndProvider} from 'react-dnd';
-import {getItems, RESET_SELECTED} from "../../services/actions/ingredients";
+import {getItems} from "../../services/actions/ingredients";
 import {useDispatch} from "react-redux";
 
 import styles from './app.module.css';
