@@ -20,9 +20,6 @@ function App() {
     const [openOrder, setOpenOrder] = React.useState(false);
     const [openInfo, setOpenInfo] = React.useState(false);
 
-    // const [ingredients, setIngredients] = React.useState([]);
-    // const [selected, setSelected] = React.useState({});
-
     const closeAllModals = () => {
         setOpenInfo(false);
         setOpenOrder(false);

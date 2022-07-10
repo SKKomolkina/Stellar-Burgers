@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import React, {useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {v4 as uuidv4} from 'uuid';
@@ -9,8 +9,9 @@ import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-deve
 
 import styles from './burger-constructor.module.css';
 
-import {addBun, addIngredient} from "../../services/actions/constructor";
+import {addBun, addIngredient, resetConstructor} from "../../services/actions/constructor";
 import AddedIngredient from "../added-ingredient/added-ingredient";
+import {sendItems} from "../../services/actions/order";
 
 const BurgerConstructor = ({openModal}) => {
     const dispatch = useDispatch();
@@ -18,12 +19,20 @@ const BurgerConstructor = ({openModal}) => {
 
     const ref = useRef(null);
 
+    const [disabledButton, setDisabledButton] = useState(true);
+
     const [{handlerId}, dropTarget] = useDrop({
         accept: 'ingredient',
         drop(item) {
             onDrop(item);
         }
-    })
+    });
+
+    const sendOrderRequest = () => {
+        openModal(true);
+        dispatch(sendItems(ingredients))
+        dispatch(resetConstructor());
+    };
 
     const onDrop = (item) => {
         const uuid = uuidv4();
@@ -39,6 +48,14 @@ const BurgerConstructor = ({openModal}) => {
             (bun ? bun.price * 2 : 0) + ingredients.reduce((a, b) => a + b.price, 0)
         )
     }, [bun, ingredients]);
+
+    useEffect(() => {
+        if (ingredients.length >= 1 && bun) {
+            setDisabledButton(false);
+        } else {
+            setDisabledButton(true);
+        }
+    }, [ingredients, bun]);
 
     return (
         <section className={`${styles.main} pl-4 pr-4`}>
@@ -61,16 +78,16 @@ const BurgerConstructor = ({openModal}) => {
                     }
 
                     <ul className={styles.list}>
-                        {ingredients.length === 0 &&
+                        {!ingredients.length &&
                             (<li className={`${styles.item} mb-4`}>
                                 <div className={styles.noIngredient}>
                                     <p className={'text text_type_main-default'}>Добавьте ингредиент</p>
                                 </div>
                             </li>)}
-                        {ingredients.length > 0 &&
+                        {ingredients.length ?
                             (ingredients.map((item, index) =>
                                 <AddedIngredient key={item.uuid} item={item} index={index}/>
-                            ))}
+                            )) : null}
                     </ul>
 
                     {bun ? (
@@ -94,11 +111,12 @@ const BurgerConstructor = ({openModal}) => {
             <div className={styles.counter}>
                 <div className={`${styles.price} mr-10`}>
                     <p className='text text_type_main-medium'>
-                        {(bun === null || ingredients.length < 1) ? 0 : priceCounter}
+                        {priceCounter}
                     </p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button onClick={() => openModal(true)} type="primary" size="medium">Оформить заказ</Button>
+                <Button disabled={disabledButton} onClick={sendOrderRequest} type="primary" size="medium">Оформить
+                    заказ</Button>
             </div>
         </section>
     )

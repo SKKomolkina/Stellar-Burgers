@@ -9,10 +9,8 @@ import MainTab from "../main-tab/main-tab";
 import IngredientsList from "../ingredients-list/ingredients-list";
 
 const BurgerIngredients = ({openModal}) => {
-    // const dispatch = useDispatch();
 
     const {ingredients} = useSelector(state => ({
-        ...state,
         ingredients: state.ingredients.items,
     }));
 

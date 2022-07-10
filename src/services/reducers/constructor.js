@@ -1,4 +1,4 @@
-import { ADD_ITEM, DELETE_ITEM, ADD_BUN, SORT_ITEMS} from "../actions/constructor";
+import { ADD_ITEM, DELETE_ITEM, ADD_BUN, SORT_ITEMS, RESET_CONSTRUCTOR } from "../actions/constructor";
 
 const initialState = {
     ingredients: [],
@@ -40,6 +40,10 @@ export const constructorReducer = (state = initialState, action) => {
                 ...state,
                 ingredients,
             }
+        }
+
+        case RESET_CONSTRUCTOR: {
+            return initialState;
         }
 
         default: {
