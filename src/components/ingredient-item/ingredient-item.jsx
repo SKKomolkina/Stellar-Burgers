@@ -25,7 +25,9 @@ const IngredientItem = ({item, openModal, count}) => {
             className={`${styles.item} mb-8`}
         >
 
-            <Counter count={count} size='small'/>
+            {!count ? null : (
+                <Counter count={count} size='small'/>
+            )}
 
             <img src={item.image} alt={item.name}/>
             <div className={styles.price}>
