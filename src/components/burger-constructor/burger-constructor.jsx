@@ -29,14 +29,15 @@ const BurgerConstructor = ({openModal}) => {
     });
 
     const sendOrderRequest = () => {
-        openModal(true);
-
         const ingredientsId = ingredients.map(i => i._id);
         const bunId = bun._id;
         const idArr = [...ingredientsId, bunId];
 
         dispatch(sendItems(idArr))
-        dispatch(resetConstructor());
+
+        setTimeout(() => {
+            openModal(true);
+        }, 2400);
     };
 
     const onDrop = (item) => {
@@ -61,6 +62,10 @@ const BurgerConstructor = ({openModal}) => {
             setDisabledButton(true);
         }
     }, [ingredients, bun]);
+
+    // useEffect(() => {
+    //     dispatch(resetConstructor());
+    // }, [dispatch]);
 
     return (
         <section className={`${styles.main} pl-4 pr-4`}>
