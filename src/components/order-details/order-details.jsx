@@ -15,7 +15,10 @@ const OrderDetails = () => {
             <h2 className={`${styles.title} text text_type_digits-large`}>{orderNumber}</h2>
             <p className='text text_type_main-default mt-8'>идентификатор заказа</p>
             <img className='mt-15 mb-15' src={done} alt=''/>
-            <p className='text text_type_main-small mb-2'>Ваш <span className={styles.span}>{orderName}</span> начали готовить</p>
+            <p className='text text_type_main-small mb-2'>Ваш
+                <span className={styles.span}> {orderName} </span>
+                начали готовить
+            </p>
             <p className='text text_type_main-small text_color_inactive'>Дождитесь готовности на орбитальной станции</p>
         </div>
     )

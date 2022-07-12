@@ -33,11 +33,7 @@ const BurgerConstructor = ({openModal}) => {
         const bunId = bun._id;
         const idArr = [...ingredientsId, bunId];
 
-        dispatch(sendItems(idArr))
-
-        setTimeout(() => {
-            openModal(true);
-        }, 2400);
+        dispatch(sendItems(idArr, openModal));
     };
 
     const onDrop = (item) => {
@@ -63,9 +59,6 @@ const BurgerConstructor = ({openModal}) => {
         }
     }, [ingredients, bun]);
 
-    // useEffect(() => {
-    //     dispatch(resetConstructor());
-    // }, [dispatch]);
 
     return (
         <section className={`${styles.main} pl-4 pr-4`}>
