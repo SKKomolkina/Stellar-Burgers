@@ -1,40 +1,50 @@
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 
 import styles from './ingredients-list.module.css';
 
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useSelector} from "react-redux";
 
-const IngredientsList = ({title, ingredientsList, setSelected, openModal}) => {
+import IngredientItem from "../ingredient-item/ingredient-item";
+
+const IngredientsList = React.forwardRef(({title, ingredientsList, openModal}, ref) => {
+    const burgerConstructor = useSelector(state => state.orderConstructor);
+
+    const ingredientsCounter = useMemo(() => {
+        const {bun, ingredients} = burgerConstructor;
+        const counter = {};
+
+        ingredients.forEach((item) => {
+            if (!counter[item._id]) counter[item._id] = 0;
+            counter[item._id]++;
+        });
+
+        if (bun) counter[bun._id] = 2;
+        return counter;
+    }, [burgerConstructor]);
+
     return (
         <div className={`${styles.wrapper} mt-10`}>
             <h2 className='text text_type_main-medium'>{title}</h2>
-            <ul className={`${styles.list} mt-6 mb-10`}>
+            <ul className={`${styles.list} mt-6 mb-10`} ref={ref}>
                 {ingredientsList.map((item) => {
                     return (
-                        <li
-                            onClick={() => {
-                                setSelected(item);
-                                openModal(true);
-                            }}
-                            key={item._id} className={`${styles.item} mb-8`}>
-                            <img src={item.image} alt={item.name}/>
-                            <div className={styles.price}>
-                                <p className='text text_type_digits-default mt-2 mb-2 mr-2'>{item.price}</p>
-                                <CurrencyIcon type={"secondary"}/>
-                            </div>
-                            <p className={`${styles.name} text text_type_main-default`}>{item.name}</p>
-                        </li>
+                        <IngredientItem
+                            count={ingredientsCounter[item._id]}
+                            openModal={openModal}
+                            key={item._id}
+                            item={item}
+                        />
                     )
                 })}
             </ul>
         </div>
     )
-}
+});
 
 IngredientsList.propTypes = {
     title: PropTypes.string,
     ingredientsList: PropTypes.array.isRequired,
-    setSelected: PropTypes.func.isRequired,
     openModal: PropTypes.func.isRequired,
 }
 

@@ -1,5 +1,8 @@
 import React from "react";
-import {getIngredients} from "../../utils/api";
+import {HTML5Backend} from 'react-dnd-html5-backend';
+import {DndProvider} from 'react-dnd';
+import {getItems} from "../../services/actions/ingredients";
+import {useDispatch} from "react-redux";
 
 import styles from './app.module.css';
 
@@ -10,20 +13,12 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
+
 function App() {
+    const dispatch = useDispatch();
+
     const [openOrder, setOpenOrder] = React.useState(false);
     const [openInfo, setOpenInfo] = React.useState(false);
-
-    const [ingredients, setIngredients] = React.useState([]);
-    const [selected, setSelected] = React.useState({});
-
-    const [bun, setBun] = React.useState([]);
-    const [main, setMain] = React.useState([]);
-    const [sauce, setSauce] = React.useState([]);
-
-    const filterIngredients = (arr, itemType) => {
-        return arr.filter(item => item.type === itemType);
-    }
 
     const closeAllModals = () => {
         setOpenInfo(false);
@@ -31,38 +26,36 @@ function App() {
     }
 
     React.useEffect(() => {
-        setMain(filterIngredients(ingredients, 'main'));
-        setBun(filterIngredients(ingredients, 'bun'));
-        setSauce(filterIngredients(ingredients, 'sauce'));
-    }, [ingredients]);
-
-    React.useEffect(() => {
-        getIngredients()
-            .then(ingredients => {
-                setIngredients(ingredients);
-                setSelected(ingredients[0])
-            })
-            .catch(err => console.log(err))
-    }, []);
+        dispatch(getItems())
+    }, [dispatch]);
 
     return (
         <div className={styles.app}>
             <AppHeader/>
+
             <main className={styles.main}>
-                <BurgerIngredients openModal={setOpenInfo} setSelected={setSelected} bun={bun} sauce={sauce}
-                                   main={main}/>
-                <BurgerConstructor openModal={setOpenOrder} selected={selected} sauce={sauce} main={main}/>
+
+                <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients
+                        openModal={setOpenInfo}
+                    />
+
+                    <BurgerConstructor
+                        openModal={setOpenOrder}
+                    />
+                </DndProvider>
+
             </main>
 
             {openOrder ?
                 (<Modal setIsOpen={setOpenOrder} isOpen={openOrder} close={closeAllModals}>
-                    <OrderDetails/>
+                    <OrderDetails />
                 </Modal>)
                 : null}
 
             {openInfo ?
                 (<Modal setIsOpen={setOpenInfo} isOpen={openInfo} close={closeAllModals}>
-                    <IngredientDetails selected={selected}/>
+                    <IngredientDetails />
                 </Modal>)
                 : null}
         </div>

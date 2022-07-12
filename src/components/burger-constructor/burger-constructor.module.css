@@ -20,7 +20,12 @@
     width: 536px;
 
     display: flex;
+    align-items: center;
     flex-direction: row;
+    justify-content: space-between;
+
+    position: relative;
+    cursor: pointer;
 }
 
 .price {
@@ -33,4 +38,27 @@
     display: flex;
     align-items: center;
     flex-direction: row;
+}
+
+.noIngredient {
+    width: 100%;
+
+    box-sizing: border-box;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    background: #2f2f37;
+    min-height: 80px;
+}
+
+.noBunsTop {
+    composes: noIngredient;
+    border-radius: 88px 88px 40px 40px;
+}
+
+.noBunsBottom {
+    composes: noIngredient;
+    border-radius: 40px 40px 88px 88px;
 }
