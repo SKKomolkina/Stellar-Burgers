@@ -1,4 +1,4 @@
-const BASE_URL = 'https://norma.nomoreparties.space/api';
+import {BASE_URL} from "./urls";
 
 export const getIngredients = () => {
     return fetch(`${BASE_URL}/ingredients`, {
@@ -26,7 +26,7 @@ export const sendOrder = (ingredients) => {
         .then(data => checkResult(data));
 }
 
-const checkResult = (res) => {
+export const checkResult = (res) => {
     if (res.ok) {
         return res.json();
     }
