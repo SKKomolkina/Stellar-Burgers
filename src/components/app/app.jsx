@@ -1,61 +1,78 @@
-import React from "react";
-import {HTML5Backend} from 'react-dnd-html5-backend';
-import {DndProvider} from 'react-dnd';
+import {useEffect, useState} from "react";
 import {getItems} from "../../services/actions/ingredients";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import styles from './app.module.css';
 
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
+import Main from "../../pages/main/main";
+import {Redirect, Route, Switch, useHistory} from "react-router-dom";
+import SignIn from "../../pages/auth/sign-in/sign-in";
+import SignUp from "../../pages/auth/sign-up/sign-up";
+import ForgotPassword from "../../pages/auth/forgot-password/forgot-password";
+import ResetPassword from "../../pages/auth/reset-password/reset-password";
+import ProtectedRoute from "../protected-route/protected-route";
+import {getUser} from "../../services/actions/user";
+
 
 function App() {
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const [openOrder, setOpenOrder] = React.useState(false);
-    const [openInfo, setOpenInfo] = React.useState(false);
+    // const {user} = useSelector(state => ({
+    //     user: state.user.user.user,
+    // }));
+
+    const [openOrder, setOpenOrder] = useState(false);
+    const [openInfo, setOpenInfo] = useState(false);
 
     const closeAllModals = () => {
         setOpenInfo(false);
         setOpenOrder(false);
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         dispatch(getItems())
     }, [dispatch]);
+
+    // useEffect(() => {
+    //     dispatch(getUser())
+    // }, []);
 
     return (
         <div className={styles.app}>
             <AppHeader/>
-
-            <main className={styles.main}>
-
-                <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients
-                        openModal={setOpenInfo}
-                    />
-
-                    <BurgerConstructor
-                        openModal={setOpenOrder}
-                    />
-                </DndProvider>
-
-            </main>
+            <Switch>
+                <ProtectedRoute exact path='/'>
+                    <Main openInfoModal={setOpenInfo} openOrderModal={setOpenOrder}/>
+                </ProtectedRoute>
+                <Route path='/sign-in'>
+                    <SignIn/>
+                </Route>
+                <Route path='/sign-up'>
+                    <SignUp/>
+                </Route>
+                <Route path='/forgot-password'>
+                    <ForgotPassword/>
+                </Route>
+                <Route path='/reset-password'>
+                    <ResetPassword/>
+                </Route>
+            </Switch>
 
             {openOrder ?
                 (<Modal setIsOpen={setOpenOrder} isOpen={openOrder} close={closeAllModals}>
-                    <OrderDetails />
+                    <OrderDetails/>
                 </Modal>)
                 : null}
 
             {openInfo ?
                 (<Modal setIsOpen={setOpenInfo} isOpen={openInfo} close={closeAllModals}>
-                    <IngredientDetails />
+                    <IngredientDetails/>
                 </Modal>)
                 : null}
         </div>
