@@ -1,8 +1,9 @@
 import {
+    fetchWithRefresh,
     forgotPasswordRequest,
-    loginRequest,
+    loginRequest, logOutRequest,
     registrationRequest,
-    resetPasswordRequest, updateTokenRequest,
+    resetPasswordRequest, updateTokenRequest, updateUserInfoRequest,
     userRequest
 } from "../../utils/auth";
 import {setCookie} from "../../utils/utils";
@@ -31,6 +32,56 @@ export const FORGOT_PASSWORD_REQUEST = 'FORGOT_PASSWORD_REQUEST';
 export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
 export const FORGOT_PASSWORD_FAILED = 'FORGOT_PASSWORD_FAILED';
 
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILED = 'LOGOUT_FAILED';
+
+export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
+
+export function updateUser(email, name) {
+    return function(dispatch) {
+        dispatch({
+            type: UPDATE_USER_REQUEST,
+        })
+        updateUserInfoRequest(email, name)
+            .then(res => {
+                if (res) {
+                    dispatch({
+                        type: UPDATE_USER_SUCCESS,
+                        user: res,
+                    })
+                } else {
+                    dispatch({
+                        type: UPDATE_USER_FAILED,
+                    })
+                }
+            })
+    }
+}
+
+export function logOut() {
+    return function(dispatch) {
+        dispatch({
+            type: LOGOUT_REQUEST,
+        })
+        logOutRequest()
+            .then(res => {
+                if (res) {
+                    dispatch({
+                        type: LOGOUT_SUCCESS,
+                        user: {},
+                    })
+                } else {
+                    dispatch({
+                        type: LOGOUT_FAILED,
+                    })
+                }
+            })
+    }
+}
+
 export function getUser() {
     return function (dispatch) {
         dispatch({
@@ -47,6 +98,12 @@ export function getUser() {
                     dispatch({
                         type: USER_FAILED,
                     })
+                }
+            })
+            .catch(err => {
+                if (err.message === 'jwt expired') {
+                    updateTokenRequest()
+                        .then(userRequest())
                 }
             })
     }

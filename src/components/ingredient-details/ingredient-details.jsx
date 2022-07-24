@@ -1,13 +1,19 @@
 import PropTypes from "prop-types";
 
 import styles from './ingredient-details.module.css';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
+import {useEffect, useMemo} from "react";
+import {getItems} from "../../services/actions/ingredients";
 
 const IngredientDetails = () => {
-    const {selected} = useSelector(state => ({
-        ...state,
-        selected: state.ingredients.selectedIngredient,
-    }));
+    const dispatch = useDispatch();
+    const {ingredients} = useSelector(state => ({ingredients: state.ingredients.items}));
+    const {id} = useParams();
+
+    const selected = useMemo(() => {
+        return ingredients.find((i) => i._id === id);
+    }, [id, ingredients]);
 
     return (
         <div className={`${styles.order} pl-10 pr-10 pt-15 pb-15`}>

@@ -1,6 +1,28 @@
 import {checkResult} from "./api";
-import {RESET_PASSWORD_URL, REGISTRATION_URL, LOGIN_URL, USER_URL, UPDATE_TOKEN, FORGOT_PASSWORD_URL,} from "./urls";
-import {getCookie, setCookie, saveTokens} from "./utils";
+import {
+    RESET_PASSWORD_URL,
+    REGISTRATION_URL,
+    LOGIN_URL,
+    USER_URL,
+    UPDATE_TOKEN,
+    FORGOT_PASSWORD_URL,
+    LOGOUT_URL,
+} from "./urls";
+import {getCookie, setCookie, deleteCookie} from "./utils";
+
+export const updateUserInfoRequest = (email, name) => {
+    return fetch(`${USER_URL}`, {
+        method: 'PATCH',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            authorization: getCookie('accessToken'),
+        },
+        body: JSON.stringify({email, name}),
+    })
+        .then(data => checkResult(data))
+        .then(res => res)
+}
 
 export const registrationRequest = (email, password, name) => {
     return fetch(`${REGISTRATION_URL}`, {
@@ -45,8 +67,11 @@ export const updateTokenRequest = () => {
             })
         }
     )
-        // .then(data => checkResult(data))
-        .then(res => res)
+        .then(data => checkResult(data))
+        .then(res => {
+            setCookie('accessToken', res.accessToken)
+            return localStorage.setItem('refreshToken', res.refreshToken)
+        })
 }
 
 export const userRequest = () => {
@@ -54,26 +79,17 @@ export const userRequest = () => {
         method: 'GET',
         mode: 'cors',
         headers: {
+            'Accept': 'application/json',
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + getCookie('accessToken')
+            authorization: getCookie('accessToken')
         },
     })
         .then(data => checkResult(data))
         .then(res => res)
-        .catch(err => {
-            if (err.message === 'jwt expired') {
-                updateTokenRequest()
-                    .then(res => {
-                        console.log(res)
-                        setCookie('accessToken', res.accessToken)
-                        localStorage.setItem('refreshToken', res.refreshToken);
-                    })
-                    // .then(data => data)
-                // const refresh = updateTokenRequest();
-                // setCookie('accessToken', refresh.accessToken);
-                // localStorage.setItem('refreshToken', refresh.refreshToken);
-            }
-        })
+        // .catch((err) => {
+        //     updateTokenRequest()
+        //         .then(() => userRequest())
+        // })
 }
 
 export const forgotPasswordRequest = (email) => {
@@ -100,4 +116,23 @@ export const resetPasswordRequest = (password, token) => {
     })
         .then(data => checkResult(data))
         .then(res => res.data)
+}
+
+export const logOutRequest = () => {
+    return fetch(`${LOGOUT_URL}`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            token: localStorage.getItem('refreshToken')
+        })
+    })
+        .then(data => checkResult(data))
+        .then(res => {
+            deleteCookie('accessToken');
+            localStorage.clear();
+            return res;
+        })
 }

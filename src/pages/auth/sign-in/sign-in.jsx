@@ -11,13 +11,9 @@ const SignIn = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    // const {user} = useSelector(state => ({
-    //     user: state.user.user.user,
-    // }));
-    //
-    // useEffect(() => {
-    //     dispatch(getUser())
-    // }, []);
+    const {userState} = useSelector(state => ({
+        userState: state.user.authSuccess,
+    }));
 
     const [emailValue, setEmailValue] = useState('');
     const emailRef = useRef(null);
@@ -41,8 +37,17 @@ const SignIn = () => {
 
         dispatch(login(email, password));
         setDisabledButton(true);
-        history.push({pathname: '/'});
     }
+
+    // useEffect(() => {
+    //     dispatch(getUser())
+    // }, []);
+
+    useEffect(() => {
+        if (userState) {
+            history.push('/')
+        }
+    }, [userState]);
 
     useEffect(() => {
         setDisabledButton(false);
@@ -70,7 +75,10 @@ const SignIn = () => {
                     type={"password"}
                 />
 
-                <Button disabled={disabledButton} onClick={(evt) => handleSignIn(evt, emailValue, passwordValue)} type="primary" size="medium">
+                <Button disabled={disabledButton}
+                        onClick={(evt) => handleSignIn(evt, emailValue, passwordValue)}
+                        type="primary"
+                        size="medium">
                     Вход
                 </Button>
 

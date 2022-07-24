@@ -12,7 +12,13 @@ import {
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAILED,
     FORGOT_PASSWORD_REQUEST,
-    FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILED
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAILED,
+    LOGOUT_REQUEST,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAILED,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS, UPDATE_USER_FAILED
 } from "../actions/user";
 
 const initialState = {
@@ -38,7 +44,7 @@ export const userReducer = (state = initialState, action) => {
                 authRequest: false,
                 authFailed: false,
                 authSuccess: true,
-                user: action,
+                user: action.user,
             }
         }
 
@@ -89,7 +95,7 @@ export const userReducer = (state = initialState, action) => {
                 authRequest: false,
                 authFailed: false,
                 authSuccess: true,
-                user: action,
+                user: action.user,
             }
         }
 
@@ -99,6 +105,26 @@ export const userReducer = (state = initialState, action) => {
                 authRequest: false,
                 authFailed: true,
                 authSuccess: false,
+                user: {},
+            }
+        }
+
+        case UPDATE_USER_REQUEST: {
+            return {
+                ...state,
+            }
+        }
+
+        case UPDATE_USER_SUCCESS: {
+            return {
+                ...state,
+                user: action.user,
+            }
+        }
+
+        case UPDATE_USER_FAILED: {
+            return {
+                ...state,
             }
         }
 
@@ -133,6 +159,25 @@ export const userReducer = (state = initialState, action) => {
         }
 
         case FORGOT_PASSWORD_FAILED: {
+            return {
+                ...state,
+            }
+        }
+
+        case LOGOUT_REQUEST: {
+            return {
+                ...state,
+            }
+        }
+
+        case LOGOUT_SUCCESS: {
+           return {
+               ...state,
+               user: {},
+           }
+        }
+
+        case LOGOUT_FAILED: {
             return {
                 ...state,
             }

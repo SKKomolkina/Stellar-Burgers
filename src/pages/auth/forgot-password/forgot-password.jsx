@@ -1,6 +1,6 @@
 import {useState, useRef, useEffect} from "react";
 import {forgotPasswordRequest} from "../../../utils/auth";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 
 import styles from '../auth.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -44,7 +44,9 @@ const ForgotPassword = () => {
                     required={true}
                 />
 
-                <Button onClick={(evt) => sendForgotPasswordRequest(evt, emailValue)} type="primary" size="medium">
+                <Button
+                        onClick={(evt) => sendForgotPasswordRequest(evt, emailValue)}
+                        type="primary" size="medium">
                     Восстановить
                 </Button>
 

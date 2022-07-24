@@ -1,7 +1,7 @@
 import {SET_MODAL, RESET_MODAL} from "../actions/ingredient-details-modal";
 
 const initialState = {
-    info: null,
+    info: {},
 }
 
 export const ingredientDetailsModalReducer = (state = initialState, action) => {
@@ -14,7 +14,7 @@ export const ingredientDetailsModalReducer = (state = initialState, action) => {
         }
 
         case RESET_MODAL: {
-            return initialState;
+            return state;
         }
 
         default: {

@@ -1,0 +1,41 @@
+.main {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.navigation {
+    width: 380px;
+    margin-right: 60px;
+
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.link {
+    width: 320px;
+    height: 64px;
+
+    text-decoration: none;
+    color: #F2F2F3;
+}
+
+.activeLink {
+    composes: link;
+    color: #8585AD;
+}
+
+.form {
+    width: 480px;
+}

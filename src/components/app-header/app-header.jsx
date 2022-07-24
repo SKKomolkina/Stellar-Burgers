@@ -23,7 +23,7 @@ const AppHeader = () => {
                     <Link to='/'><Logo/></Link>
                 </div>
 
-                <NavItem text='Личный кабинет'>
+                <NavItem text='Личный кабинет' link='/profile'>
                     <ProfileIcon type={'secondary'}/>
                 </NavItem>
             </div>

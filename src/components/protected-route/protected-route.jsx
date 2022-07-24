@@ -10,9 +10,9 @@ const ProtectedRoute = ({children, ...rest}) => {
         user: state.user.user.user,
     }));
 
-    useEffect(() => {
-        dispatch(getUser())
-    }, []);
+    // useEffect(() => {
+    //     dispatch(getUser())
+    // }, []);
 
     return (
         <Route

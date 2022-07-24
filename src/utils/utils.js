@@ -32,3 +32,7 @@ export const saveTokens = (refreshToken, accessToken) => {
     setCookie('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
 }
+
+export function deleteCookie(name) {
+    setCookie(name, null, { expires: -1 });
+}
