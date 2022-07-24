@@ -1,5 +1,4 @@
 import {
-    fetchWithRefresh,
     forgotPasswordRequest,
     loginRequest, logOutRequest,
     registrationRequest,

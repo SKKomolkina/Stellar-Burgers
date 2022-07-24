@@ -1,6 +1,5 @@
 import {checkResult} from "./api";
 import {
-    RESET_PASSWORD_URL,
     REGISTRATION_URL,
     LOGIN_URL,
     USER_URL,
