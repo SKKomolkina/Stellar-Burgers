@@ -38,7 +38,7 @@ const ResetPassword = () => {
 
     return (
         <main className={styles.main}>
-            <form className={styles.form}>
+            <form onSubmit={(evt) => sendResetPasswordRequest(evt, passwordValue, codeValue)}  className={styles.form}>
                 <h1 className={'text text_type_main-medium mb-2'}>Восстановление пароля</h1>
                 <Input
                     ref={passwordRef}
@@ -58,13 +58,13 @@ const ResetPassword = () => {
                     type={"text"}
                 />
 
-                <Button onClick={(evt) => sendResetPasswordRequest(evt, passwordValue, codeValue)} type="primary" size="medium">
+                <Button type="primary" size="medium">
                     Сохранить
                 </Button>
 
                 <p className="text text_type_main-default text_color_inactive mt-10">
                     Вспомнили пароль?
-                    <Link className={`${styles.link} text text_type_main-default text_color_inactive ml-2`}>
+                    <Link to='/sign-up' className={`${styles.link} text text_type_main-default text_color_inactive ml-2`}>
                         Войти
                     </Link>
                 </p>

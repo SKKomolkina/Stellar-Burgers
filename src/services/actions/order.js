@@ -16,6 +16,8 @@ export function sendItems(ingredients, setOpenModal) {
                         type: SEND_ORDER_SUCCESS,
                         payload: res,
                     })
+                    console.log(res);
+                    // setOpenModal(true);
                 } else {
                     dispatch({
                         type: SEND_ORDER_FAILED,

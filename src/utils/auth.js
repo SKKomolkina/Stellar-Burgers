@@ -1,16 +1,9 @@
 import {checkResult} from "./api";
-import {
-    REGISTRATION_URL,
-    LOGIN_URL,
-    USER_URL,
-    UPDATE_TOKEN,
-    FORGOT_PASSWORD_URL,
-    LOGOUT_URL,
-} from "./urls";
+import {baseUrl} from "./urls";
 import {getCookie, setCookie, deleteCookie} from "./utils";
 
 export const updateUserInfoRequest = (email, name) => {
-    return fetch(`${USER_URL}`, {
+    return fetch(`${baseUrl}/auth/user`, {
         method: 'PATCH',
         headers: {
             'Accept': 'application/json',
@@ -24,7 +17,7 @@ export const updateUserInfoRequest = (email, name) => {
 }
 
 export const registrationRequest = (email, password, name) => {
-    return fetch(`${REGISTRATION_URL}`, {
+    return fetch(`${baseUrl}/auth/register`, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -38,7 +31,7 @@ export const registrationRequest = (email, password, name) => {
 }
 
 export const loginRequest = (email, password) => {
-    return fetch(`${LOGIN_URL}`, {
+    return fetch(`${baseUrl}/auth/login`, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -56,7 +49,7 @@ export const loginRequest = (email, password) => {
 }
 
 export const updateTokenRequest = () => {
-    return fetch(`${UPDATE_TOKEN}`, {
+    return fetch(`${baseUrl}/auth/token`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -74,7 +67,7 @@ export const updateTokenRequest = () => {
 }
 
 export const userRequest = () => {
-    return fetch(`${USER_URL}`, {
+    return fetch(`${baseUrl}/auth/user`, {
         method: 'GET',
         mode: 'cors',
         headers: {
@@ -85,14 +78,14 @@ export const userRequest = () => {
     })
         .then(data => checkResult(data))
         .then(res => res)
-        // .catch((err) => {
-        //     updateTokenRequest()
-        //         .then(() => userRequest())
-        // })
+    // .catch((err) => {
+    //     updateTokenRequest()
+    //         .then(() => userRequest())
+    // })
 }
 
 export const forgotPasswordRequest = (email) => {
-    return fetch(`${FORGOT_PASSWORD_URL}`, {
+    return fetch(`${baseUrl}/password-reset`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -105,7 +98,7 @@ export const forgotPasswordRequest = (email) => {
 }
 
 export const resetPasswordRequest = (password, token) => {
-    return fetch(`${FORGOT_PASSWORD_URL}`, {
+    return fetch(`${baseUrl}/password-reset/reset`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -118,7 +111,7 @@ export const resetPasswordRequest = (password, token) => {
 }
 
 export const logOutRequest = () => {
-    return fetch(`${LOGOUT_URL}`, {
+    return fetch(`${baseUrl}/auth/logout`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

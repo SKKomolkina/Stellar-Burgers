@@ -12,7 +12,7 @@ const Profile = () => {
 
     const [nameValue, setNameValue] = useState(user.name);
     const [emailValue, setEmailValue] = useState(user.email);
-    // const [passwordValue, setPasswordValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
 
     const handleChange = (evt) => {
         if (evt.target.name === 'email') {
@@ -62,7 +62,7 @@ const Profile = () => {
                     </NavLink>
                 </div>
 
-                <form className={styles.form}>
+                <form onSubmit={(evt) => handleChangeInfo(evt, emailValue, nameValue)} className={styles.form}>
                     <Input onChange={(evt) => handleChange(evt)}
                            placeholder='Имя'
                            value={nameValue}
@@ -78,12 +78,12 @@ const Profile = () => {
                     />
                     <Input
                         placeholder='Пароль'
-                        // value={passwordValue}
+                        value={passwordValue}
                         name='password'
                         icon={"HideIcon"}
                     />
 
-                    <Button onClick={(evt) => handleChangeInfo(evt, emailValue, nameValue)}
+                    <Button
                             size={"medium"}>
                         Сохранить
                     </Button>

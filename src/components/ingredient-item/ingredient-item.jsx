@@ -19,22 +19,18 @@ const IngredientItem = ({item, openModal, count}) => {
     const ingredientId = item['_id'];
 
     return (
-        <Link key={item._id} className={styles.link}
+        <Link key={item._id}
+              onClick={() => {
+                  dispatch(getSelectedItem(item));
+                  openModal(true);
+              }}
+              ref={dragRef} className={styles.link}
               to={{
                   pathname: `/ingredients/${ingredientId}`,
                   state: {background: location}
               }}
         >
-            <li
-                ref={dragRef}
-                onClick={() => {
-                    dispatch(getSelectedItem(item));
-                    openModal(true);
-                }}
-                key={item._id}
-                className={`${styles.item} mb-8`}
-            >
-
+            <li key={item._id} className={`${styles.item} mb-8`}>
                 {!count ? null : (
                     <Counter count={count} size='small'/>
                 )}

@@ -27,6 +27,7 @@ const initialState = {
     authRequest: false,
     authFailed: false,
     authSuccess: false,
+    forgotPassword: false,
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -154,13 +155,15 @@ export const userReducer = (state = initialState, action) => {
 
         case FORGOT_PASSWORD_SUCCESS: {
             return {
-                ...state
+                ...state,
+                forgotPassword: true,
             }
         }
 
         case FORGOT_PASSWORD_FAILED: {
             return {
                 ...state,
+                forgotPassword: false,
             }
         }
 
@@ -174,6 +177,7 @@ export const userReducer = (state = initialState, action) => {
            return {
                ...state,
                user: {},
+               authSuccess: false,
            }
         }
 

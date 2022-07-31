@@ -46,7 +46,7 @@ const SignUp = () => {
 
     return (
         <main className={styles.main}>
-            <form className={styles.form}>
+            <form onSubmit={(evt) => handleSignUp(evt, emailValue, passwordValue, nameValue)} className={styles.form}>
                 <h1 className={'text text_type_main-medium mb-2'}>Регистрация</h1>
                 <Input
                     ref={nameRef}
@@ -74,7 +74,7 @@ const SignUp = () => {
                     type={"password"}
                 />
 
-                <Button onClick={(evt) => handleSignUp(evt, emailValue, passwordValue, nameValue)} type="primary" size="medium">
+                <Button type="primary" size="medium">
                     Зарегистрироваться
                 </Button>
 

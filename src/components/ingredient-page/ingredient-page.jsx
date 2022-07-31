@@ -6,7 +6,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import {getItems} from "../../services/actions/ingredients";
 
 const IngredientPage = () => {
-    const {id} = useParams();
+    const {ingredientId} = useParams();
     const dispatch = useDispatch();
     const {ingredients} = useSelector(state => ({ingredients: state.ingredients.items}));
 
@@ -14,24 +14,27 @@ const IngredientPage = () => {
         dispatch(getItems());
     }, [dispatch]);
 
-    const view = useMemo(() => {
-        let details = false;
-
-        if (ingredients) {
-            ingredients.forEach((i) => {
-                if (i._id === id) {
-                    details = true;
-                }
-            })
-        }
-
-        return details;
-    }, [id, ingredients]);
+    // console.log(ingredientId)
+    //
+    // const view = useMemo(() => {
+    //     let details = false;
+    //
+    //     if (ingredients) {
+    //         ingredients.forEach((i) => {
+    //             if (i._id === ingredientId) {
+    //                 details = true;
+    //             }
+    //         })
+    //     }
+    //
+    //     return details;
+    // }, [ingredientId, ingredients]);
 
     return (
         <main className={styles.main}>
             <div className={styles.container}>
-                {view && <IngredientDetails/>}
+                {/*{view && <IngredientDetails/>}*/}
+                <IngredientDetails />
             </div>
         </main>
     )

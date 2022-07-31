@@ -12,10 +12,14 @@ import styles from './burger-constructor.module.css';
 import {addBun, addIngredient, resetConstructor} from "../../services/actions/constructor";
 import AddedIngredient from "../added-ingredient/added-ingredient";
 import {sendItems} from "../../services/actions/order";
+import {useHistory} from "react-router-dom";
 
 const BurgerConstructor = ({openModal}) => {
     const dispatch = useDispatch();
-    const {bun, ingredients} = useSelector(store => store.orderConstructor);
+    const history = useHistory();
+
+    const {bun, ingredients} = useSelector(state => state.orderConstructor);
+    const {authSuccess} = useSelector(state => ({authSuccess: state.user.authSuccess}));
 
     const ref = useRef(null);
 
@@ -29,11 +33,17 @@ const BurgerConstructor = ({openModal}) => {
     });
 
     const sendOrderRequest = () => {
-        const ingredientsId = ingredients.map(i => i._id);
-        const bunId = bun._id;
-        const idArr = [...ingredientsId, bunId];
+        // console.log(authSuccess)
+        if (authSuccess) {
+            const ingredientsId = ingredients.map(i => i._id);
+            const bunId = bun._id;
+            const idArr = [...ingredientsId, bunId];
 
-        dispatch(sendItems(idArr, openModal));
+            console.log(authSuccess)
+            dispatch(sendItems(idArr, openModal));
+        } else {
+            history.push('/sign-in');
+        }
     };
 
     const onDrop = (item) => {
@@ -119,7 +129,8 @@ const BurgerConstructor = ({openModal}) => {
                     <CurrencyIcon type="primary"/>
                 </div>
                 <Button disabled={disabledButton} onClick={sendOrderRequest} type="primary" size="medium">Оформить
-                    заказ</Button>
+                    заказ
+                </Button>
             </div>
         </section>
     )

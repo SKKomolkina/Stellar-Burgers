@@ -40,7 +40,7 @@ export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
 
 export function updateUser(email, name) {
-    return function(dispatch) {
+    return function (dispatch) {
         dispatch({
             type: UPDATE_USER_REQUEST,
         })
@@ -57,11 +57,16 @@ export function updateUser(email, name) {
                     })
                 }
             })
+            .catch(() => {
+                dispatch({
+                    type: UPDATE_USER_FAILED,
+                })
+            })
     }
 }
 
 export function logOut() {
-    return function(dispatch) {
+    return function (dispatch) {
         dispatch({
             type: LOGOUT_REQUEST,
         })
@@ -77,6 +82,11 @@ export function logOut() {
                         type: LOGOUT_FAILED,
                     })
                 }
+            })
+            .catch(() => {
+                dispatch({
+                    type: LOGOUT_FAILED,
+                })
             })
     }
 }
@@ -127,6 +137,11 @@ export function login(email, password) {
                     })
                 }
             })
+            .catch(() => {
+                dispatch({
+                    type: LOGIN_FAILED,
+                })
+            })
     }
 }
 
@@ -147,6 +162,11 @@ export function registration(email, password, name) {
                         type: REGISTRATION_FAILED,
                     })
                 }
+            })
+            .catch(() => {
+                dispatch({
+                    type: REGISTRATION_FAILED,
+                })
             })
     }
 }
@@ -169,6 +189,11 @@ export function updateToken() {
                     })
                 }
             })
+            .catch(() => {
+                dispatch({
+                    type: UPDATE_TOKEN_FAILED,
+                })
+            })
     }
 }
 
@@ -178,16 +203,15 @@ export function forgotPassword(email) {
             type: FORGOT_PASSWORD_REQUEST,
         })
         forgotPasswordRequest(email)
-            .then(res => {
-                if (res) {
-                    dispatch({
-                        type: FORGOT_PASSWORD_SUCCESS,
-                    })
-                } else {
-                    dispatch({
-                        type: FORGOT_PASSWORD_FAILED,
-                    })
-                }
+            .then(() => {
+                dispatch({
+                    type: FORGOT_PASSWORD_SUCCESS,
+                })
+            })
+            .catch(() => {
+                dispatch({
+                    type: FORGOT_PASSWORD_FAILED,
+                })
             })
     }
 }
@@ -208,6 +232,11 @@ export function resetPassword(password, token) {
                         type: RESET_PASSWORD_FAILED,
                     })
                 }
+            })
+            .catch(() => {
+                dispatch({
+                    type: RESET_PASSWORD_FAILED,
+                })
             })
     }
 }

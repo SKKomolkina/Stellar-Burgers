@@ -55,7 +55,7 @@ const SignIn = () => {
 
     return (
         <main className={styles.main}>
-            <form className={styles.form}>
+            <form onSubmit={(evt) => handleSignIn(evt, emailValue, passwordValue)} className={styles.form}>
                 <h1 className={'text text_type_main-medium mb-2'}>Вход</h1>
                 <Input
                     ref={emailRef}
@@ -76,7 +76,6 @@ const SignIn = () => {
                 />
 
                 <Button disabled={disabledButton}
-                        onClick={(evt) => handleSignIn(evt, emailValue, passwordValue)}
                         type="primary"
                         size="medium">
                     Вход

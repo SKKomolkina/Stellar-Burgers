@@ -29,12 +29,15 @@ function App() {
     const location = useLocation();
     const background = location.state && location.state.background;
 
-    const {userState} = useSelector(state => ({
+    const {userState, forgotPassword} = useSelector(state => ({
         userState: state.user.authSuccess,
+        forgotPassword: state.user.forgotPassword,
     }));
 
     const [openOrder, setOpenOrder] = useState(false);
     const [openInfo, setOpenInfo] = useState(false);
+
+    const [resetPassword, setResetPassword] = useState(false);
 
     const closeAllModals = () => {
         setOpenInfo(false);
@@ -47,22 +50,22 @@ function App() {
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(getUser())
-    }, []);
-
-    useEffect(() => {
         if (!userState && getCookie('accessToken')) {
             dispatch(getUser())
         }
-    }, [dispatch, userState])
+    }, [dispatch, userState]);
+
+    useEffect(() => {
+        console.log(openOrder)
+    }, [openOrder])
 
     return (
         <div className={styles.app}>
             <AppHeader/>
             <Switch location={background || location}>
-                <ProtectedRoute exact={true} path='/'>
+                <Route exact={true} path='/'>
                     <Main openInfoModal={setOpenInfo} openOrderModal={setOpenOrder}/>
-                </ProtectedRoute>
+                </Route>
                 <Route exact={true} path='/sign-in'>
                     {!userState ? <SignIn/> : <Redirect to='/'/>}
                 </Route>
@@ -70,22 +73,22 @@ function App() {
                     {!userState ? <SignUp/> : <Redirect to='/'/>}
                 </Route>
                 <Route exact={true} path='/forgot-password'>
-                    {!userState ? <ForgotPassword/> : <Redirect to='/'/>}
+                    {!userState ? <ForgotPassword setResetPassword={setResetPassword}/> : <Redirect to='/'/>}
                 </Route>
                 <Route exact={true} path='/reset-password'>
-                    <ResetPassword/>
+                    {forgotPassword ? <ResetPassword/> : <Redirect to='/forgot-password'/>}
                 </Route>
                 <ProtectedRoute exact={true} path='/profile'>
                     <Profile/>
                 </ProtectedRoute>
 
                 <Route path='/ingredients/:id' exact={true}>
-                    <IngredientPage />
+                    <IngredientPage/>
                 </Route>
             </Switch>
 
             {background && (
-                <Switch>
+                <>
                     <Route path='/ingredients/:id'>
                         {openInfo ?
                             (<Modal setIsOpen={setOpenInfo} isOpen={openInfo} close={closeAllModals}>
@@ -93,16 +96,14 @@ function App() {
                             </Modal>)
                             : null}
                     </Route>
-
-                    <Route path='/order-details'>
-                        {openOrder ?
-                            (<Modal setIsOpen={setOpenOrder} isOpen={openOrder} close={closeAllModals}>
-                                <OrderDetails/>
-                            </Modal>)
-                            : null}
-                    </Route>
-                </Switch>
+                </>
             )}
+
+            {openOrder ? (
+                <Modal setIsOpen={setOpenOrder} isOpen={openOrder} close={closeAllModals}>
+                    <OrderDetails/>
+                </Modal>
+            ) : null}
         </div>
     );
 }

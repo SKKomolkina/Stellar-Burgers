@@ -11,10 +11,10 @@ const AppHeader = () => {
         <header className={`${styles.header}`}>
             <div className={styles.wrapper}>
                 <nav className={`${styles.navigation}`}>
-                    <NavItem text='Конструктор'>
+                    <NavItem to='/' text='Конструктор'>
                         <BurgerIcon type={'secondary'}/>
                     </NavItem>
-                    <NavItem text='Лента заказов'>
+                    <NavItem to='/' text='Лента заказов'>
                         <ListIcon type={'secondary'}/>
                     </NavItem>
                 </nav>
