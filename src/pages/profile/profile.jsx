@@ -17,6 +17,8 @@ const Profile = () => {
     const handleChange = (evt) => {
         if (evt.target.name === 'email') {
             setEmailValue(evt.target.value);
+        } else if (evt.target.name === 'password') {
+            setPasswordValue('')
         } else {
             setNameValue(evt.target.value);
         }
@@ -77,8 +79,9 @@ const Profile = () => {
                         icon={"EditIcon"}
                     />
                     <Input
+                        onChange={(evt) => handleChange(evt)}
                         placeholder='Пароль'
-                        value={passwordValue}
+                        value=''
                         name='password'
                         icon={"HideIcon"}
                     />

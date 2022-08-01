@@ -55,10 +55,6 @@ function App() {
         }
     }, [dispatch, userState]);
 
-    useEffect(() => {
-        console.log(openOrder)
-    }, [openOrder])
-
     return (
         <div className={styles.app}>
             <AppHeader/>
@@ -67,7 +63,7 @@ function App() {
                     <Main openInfoModal={setOpenInfo} openOrderModal={setOpenOrder}/>
                 </Route>
                 <Route exact={true} path='/sign-in'>
-                    {!userState ? <SignIn/> : <Redirect to='/'/>}
+                    <SignIn/>
                 </Route>
                 <Route exact={true} path='/sign-up'>
                     {!userState ? <SignUp/> : <Redirect to='/'/>}

@@ -24,7 +24,12 @@ export function sendItems(ingredients, setOpenModal) {
                     })
                 }
             })
-            .then(() => setOpenModal(true));
+            .then(() => setOpenModal(true))
+            .catch(() => {
+                dispatch({
+                    type: SEND_ORDER_FAILED,
+                })
+            })
     }
 }
 

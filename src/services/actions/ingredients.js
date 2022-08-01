@@ -22,6 +22,11 @@ export function getItems() {
                 })
             }
         })
+            .catch(() => {
+                dispatch({
+                    type: GET_ITEMS_FAILED,
+                })
+            })
     }
 }
 

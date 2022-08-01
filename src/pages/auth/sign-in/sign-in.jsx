@@ -3,7 +3,7 @@ import {useState, useRef, useEffect, useCallback} from "react";
 import styles from '../auth.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {Link, useHistory} from "react-router-dom";
+import {Link, Redirect, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getUser, login} from "../../../services/actions/user";
 
@@ -43,15 +43,19 @@ const SignIn = () => {
     //     dispatch(getUser())
     // }, []);
 
-    useEffect(() => {
-        if (userState) {
-            history.push('/')
-        }
-    }, [userState]);
+    // useEffect(() => {
+    //     if (userState) {
+    //         history.push('/')
+    //     }
+    // }, [userState]);
 
-    useEffect(() => {
-        setDisabledButton(false);
-    }, []);
+    if (userState) {
+        return <Redirect to={history?.location?.state?.from || '/'} />;
+    }
+
+    // useEffect(() => {
+    //     setDisabledButton(false);
+    // }, []);
 
     return (
         <main className={styles.main}>

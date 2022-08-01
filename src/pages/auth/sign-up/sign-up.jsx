@@ -3,7 +3,7 @@ import {registration} from "../../../services/actions/user";
 
 import styles from '../auth.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useHistory} from "react-router-dom";
+import {Link, Redirect, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 const SignUp = () => {
@@ -11,6 +11,9 @@ const SignUp = () => {
     const dispatch = useDispatch();
 
     const {user} = useSelector(store => store.user);
+    const {userState} = useSelector(state => ({
+        userState: state.user.authSuccess,
+    }));
 
     const [nameValue, setNameValue] = useState('');
     const nameRef = useRef(null);
@@ -38,11 +41,15 @@ const SignUp = () => {
         history.push('/sign-in');
     }
 
-    useEffect(() => {
-        setNameValue('');
-        setEmailValue('');
-        setPasswordValue('');
-    }, []);
+    if (userState) {
+        return <Redirect to={history?.location?.state?.from || '/'} />;
+    }
+
+    // useEffect(() => {
+    //     setNameValue('');
+    //     setEmailValue('');
+    //     setPasswordValue('');
+    // }, []);
 
     return (
         <main className={styles.main}>
