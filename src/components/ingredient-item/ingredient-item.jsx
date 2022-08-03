@@ -16,7 +16,7 @@ const IngredientItem = ({item, openModal, count}) => {
         item: item,
     })
 
-    const ingredientId = item['_id'];
+    const id = item['_id'];
 
     return (
         <Link key={item._id}
@@ -26,7 +26,7 @@ const IngredientItem = ({item, openModal, count}) => {
               }}
               ref={dragRef} className={styles.link}
               to={{
-                  pathname: `/ingredients/${ingredientId}`,
+                  pathname: `/ingredients/${id}`,
                   state: {background: location}
               }}
         >

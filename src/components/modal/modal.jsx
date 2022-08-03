@@ -24,7 +24,7 @@ const Modal = ({children, isOpen, setIsOpen, close}) => {
     }, []);
 
    return modalContainer ? ReactDOM.createPortal(
-       <div className={isOpen ? styles.visible : styles.hidden}>
+       <div className={styles.visible}>
            <ModalOverlay close={close}>
                <div className={`${styles.wrapper}`}>
                    <button

@@ -42,7 +42,7 @@ function App() {
     const closeAllModals = () => {
         setOpenInfo(false);
         setOpenOrder(false);
-        history.push('/');
+        history.goBack();
     }
 
     useEffect(() => {
@@ -84,15 +84,11 @@ function App() {
             </Switch>
 
             {background && (
-                <>
-                    <Route path='/ingredients/:id'>
-                        {openInfo ?
-                            (<Modal setIsOpen={setOpenInfo} isOpen={openInfo} close={closeAllModals}>
-                                <IngredientDetails/>
-                            </Modal>)
-                            : null}
-                    </Route>
-                </>
+                    <Route path='/ingredients/:id' children={
+                        <Modal setIsOpen={setOpenInfo} isOpen={openInfo} close={closeAllModals}>
+                            <IngredientDetails/>
+                        </Modal>
+                    }/>
             )}
 
             {openOrder ? (
