@@ -4,13 +4,27 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState, useMemo} from "react";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {getItems} from "../../services/actions/ingredients";
+import {IIngredient} from "../../interface/interface";
 
 const IngredientPage = () => {
-    const [ingredient, setIngredient] = useState({});
+    const [ingredient, setIngredient] = useState<IIngredient>({
+        _id: "",
+        calories: 0,
+        carbohydrates: 0,
+        fat: 0,
+        image: "",
+        image_large: "",
+        image_mobile: "",
+        name: "",
+        price: 0,
+        proteins: 0,
+        type: "",
+        uuid: 0
+    });
 
-    const {id} = useParams();
+    const {id} = useParams<any>();
     const dispatch = useDispatch();
-    const {ingredients} = useSelector(state => ({ingredients: state.ingredients.items}));
+    const {ingredients} = useSelector((state: any) => ({ingredients: state.ingredients.items}));
 
     // useEffect(() => {
     //     dispatch(getItems());
@@ -18,7 +32,7 @@ const IngredientPage = () => {
 
     useEffect(() => {
         if(!id || ingredients.ingredients < 1) return;
-        const selected = ingredients.find(i => i._id === id);
+        const selected = ingredients.find((i: IIngredient) => i._id === id);
         selected && setIngredient(selected);
     }, [id, ingredients]);
 

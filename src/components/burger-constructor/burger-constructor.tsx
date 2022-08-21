@@ -1,6 +1,4 @@
-import PropTypes from "prop-types";
-
-import React, {useEffect, useRef, useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from "react";
 import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {v4 as uuidv4} from 'uuid';
@@ -13,40 +11,44 @@ import {addBun, addIngredient, resetConstructor} from "../../services/actions/co
 import AddedIngredient from "../added-ingredient/added-ingredient";
 import {sendItems} from "../../services/actions/order";
 import {useHistory} from "react-router-dom";
+import {IIngredient} from "../../interface/interface";
 
-const BurgerConstructor = ({openModal}) => {
+interface IBurgerConstructorProps {
+    openModal: Dispatch<SetStateAction<boolean>>;
+}
+
+const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({openModal}): JSX.Element => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const {bun, ingredients} = useSelector(state => state.orderConstructor);
-    const {authSuccess} = useSelector(state => ({authSuccess: state.user.authSuccess}));
+    const {bun, ingredients} = useSelector((state: any) => state.orderConstructor);
+    const {authSuccess} = useSelector((state: any) => ({authSuccess: state.user.authSuccess}));
 
     const ref = useRef(null);
 
     const [disabledButton, setDisabledButton] = useState(true);
 
-    const [{handlerId}, dropTarget] = useDrop({
+    const [, dropTarget] = useDrop({
         accept: 'ingredient',
-        drop(item) {
+        drop(item: IIngredient) {
             onDrop(item);
         }
     });
 
     const sendOrderRequest = () => {
-        // console.log(authSuccess)
         if (authSuccess) {
-            const ingredientsId = ingredients.map(i => i._id);
+            const ingredientsId = ingredients.map((i: IIngredient) => i._id);
             const bunId = bun._id;
             const idArr = [...ingredientsId, bunId];
 
-            console.log(authSuccess)
+            // @ts-ignore
             dispatch(sendItems(idArr, openModal));
         } else {
             history.push('/sign-in');
         }
     };
 
-    const onDrop = (item) => {
+    const onDrop = (item: IIngredient) => {
         const uuid = uuidv4();
         if (item.type !== 'bun') {
             dispatch(addIngredient(item, uuid));
@@ -57,7 +59,7 @@ const BurgerConstructor = ({openModal}) => {
 
     const priceCounter = React.useMemo(() => {
         return (
-            (bun ? bun.price * 2 : 0) + ingredients.reduce((a, b) => a + b.price, 0)
+            (bun ? bun.price * 2 : 0) + ingredients.reduce((a: number, b: IIngredient) => a + b.price, 0)
         )
     }, [bun, ingredients]);
 
@@ -68,7 +70,6 @@ const BurgerConstructor = ({openModal}) => {
             setDisabledButton(true);
         }
     }, [ingredients, bun]);
-
 
     return (
         <section className={`${styles.main} pl-4 pr-4`}>
@@ -98,7 +99,7 @@ const BurgerConstructor = ({openModal}) => {
                                 </div>
                             </li>)}
                         {ingredients.length ?
-                            (ingredients.map((item, index) =>
+                            (ingredients.map((item: IIngredient, index: number) =>
                                 <AddedIngredient key={item.uuid} item={item} index={index}/>
                             )) : null}
                     </ul>
@@ -128,16 +129,13 @@ const BurgerConstructor = ({openModal}) => {
                     </p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button disabled={disabledButton} onClick={sendOrderRequest} type="primary" size="medium">Оформить
-                    заказ
+                {/* @ts-ignore */}
+                <Button disabled={disabledButton} onClick={sendOrderRequest} type="primary" size="medium">
+                    Оформить заказ
                 </Button>
             </div>
         </section>
     )
-}
-
-BurgerConstructor.propTypes = {
-    openModal: PropTypes.func.isRequired,
 }
 
 export default BurgerConstructor;

@@ -1,5 +1,4 @@
-import PropTypes from "prop-types";
-import React, {useState} from "react";
+import React, {Dispatch, SetStateAction, useRef, useState} from "react";
 import {useInView} from "react-intersection-observer";
 import {useSelector} from "react-redux";
 
@@ -7,11 +6,18 @@ import styles from './burger-ingredients.module.css';
 
 import MainTab from "../main-tab/main-tab";
 import IngredientsList from "../ingredients-list/ingredients-list";
+import {IIngredient} from "../../interface/interface";
 
-const BurgerIngredients = ({openModal}) => {
-    const {ingredients} = useSelector(state => ({
+interface IBurgerIngredientsProps {
+    openModal: Dispatch<SetStateAction<boolean>>;
+}
+
+const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({openModal}) => {
+    const {ingredients} = useSelector((state: any) => ({
         ingredients: state.ingredients.items,
     }));
+
+    const sectionRef = useRef(null);
 
     const [bun, setBun] = React.useState([]);
     const [main, setMain] = React.useState([]);
@@ -29,8 +35,8 @@ const BurgerIngredients = ({openModal}) => {
         threshold: 0,
     });
 
-    const filterIngredients = (arr, itemType) => {
-        return arr.filter(item => item.type === itemType);
+    const filterIngredients = (arr: [], itemType: string) => {
+        return arr.filter((item: IIngredient) => item.type === itemType);
     }
 
     React.useEffect(() => {
@@ -56,9 +62,9 @@ const BurgerIngredients = ({openModal}) => {
     return (
         <section className={styles.main}>
             <h1 className='text text_type_main-large mb-10'>Соберите бургер</h1>
-            <MainTab currentTab={currentTab} setCurrentTab={setCurrentTab}/>
+            <MainTab currentTab={currentTab} />
 
-            <ul className={styles.list}>
+            <ul className={styles.list} ref={sectionRef}>
                 <li className={styles.listItem}>
                     <IngredientsList
                         ref={bunsRef}
@@ -87,10 +93,6 @@ const BurgerIngredients = ({openModal}) => {
 
         </section>
     )
-}
-
-BurgerIngredients.propTypes = {
-    openModal: PropTypes.func.isRequired,
 }
 
 export default BurgerIngredients;

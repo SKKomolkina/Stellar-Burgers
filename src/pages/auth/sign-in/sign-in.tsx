@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect, useCallback} from "react";
+import React, {useState, useRef, useEffect, useCallback} from "react";
 
 import styles from '../auth.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -11,30 +11,31 @@ const SignIn = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const {userState} = useSelector(state => ({
+    const {userState} = useSelector((state: any) => ({
         userState: state.user.authSuccess,
     }));
 
-    const [emailValue, setEmailValue] = useState('');
-    const emailRef = useRef(null);
+    const [emailValue, setEmailValue] = useState<string>('');
+    const emailRef = useRef<HTMLInputElement>(null);
 
-    const [passwordValue, setPasswordValue] = useState('');
-    const passwordRef = useRef(null);
+    const [passwordValue, setPasswordValue] = useState<string>('');
+    const passwordRef = useRef<HTMLInputElement>(null);
 
-    const [disabledButton, setDisabledButton] = useState(false);
+    const [disabledButton, setDisabledButton] = useState<boolean>(false);
 
-    const handleChange = (evt) => {
-        if (evt.target.name === 'email') {
-            setEmailValue(evt.target.value);
-        } else {
-            setPasswordValue(evt.target.value);
-        }
-        setDisabledButton(false);
-    }
+    // const handleChange = (evt) => {
+    //     if (evt.target.name === 'email') {
+    //         setEmailValue(evt.target.value);
+    //     } else {
+    //         setPasswordValue(evt.target.value);
+    //     }
+    //     setDisabledButton(false);
+    // }
 
-    const handleSignIn = (evt, email, password) => {
+    const handleSignIn = (evt: React.FormEvent, email: string, password: string) => {
         evt.preventDefault();
 
+        // @ts-ignore
         dispatch(login(email, password));
         setDisabledButton(true);
     }
@@ -50,6 +51,7 @@ const SignIn = () => {
     // }, [userState]);
 
     if (userState) {
+        // @ts-ignore
         return <Redirect to={history?.location?.state?.from || '/'} />;
     }
 
@@ -64,7 +66,7 @@ const SignIn = () => {
                 <Input
                     ref={emailRef}
                     value={emailValue}
-                    onChange={(evt) => handleChange(evt)}
+                    onChange={(evt) => setEmailValue(evt.target.value)}
                     placeholder='E-mail'
                     name='email'
                     type={"email"}
@@ -72,13 +74,14 @@ const SignIn = () => {
                 <Input
                     ref={passwordRef}
                     value={passwordValue}
-                    onChange={(evt) => handleChange(evt)}
+                    onChange={(evt) => setPasswordValue(evt.target.value)}
                     placeholder='Password'
                     name='password'
                     icon={"HideIcon"}
                     type={"password"}
                 />
 
+                {/* @ts-ignore */}
                 <Button disabled={disabledButton}
                         type="primary"
                         size="medium">

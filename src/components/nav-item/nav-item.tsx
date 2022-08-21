@@ -1,9 +1,14 @@
-import PropTypes from "prop-types";
-
 import styles from './nav-item.module.css';
 import {Link} from "react-router-dom";
+import React from "react";
 
-const NavItem = ({children, text, link}) => {
+interface INavItem {
+    children: any;
+    text: string;
+    link: string;
+}
+
+const NavItem: React.FC<INavItem> = ({children, text, link}) => {
     return (
         <div className={styles.wrapper}>
             <Link className={styles.link} to={link ? link : '/'}>
@@ -12,12 +17,6 @@ const NavItem = ({children, text, link}) => {
             </Link>
         </div>
     )
-}
-
-NavItem.prototype = {
-    children: PropTypes.element.isRequired,
-    link: PropTypes.string,
-    text: PropTypes.string,
 }
 
 export default NavItem;

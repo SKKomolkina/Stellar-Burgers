@@ -2,41 +2,43 @@ import styles from './profile.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {logOut, updateUser} from "../../services/actions/user";
-import {useState} from "react";
+import React, {useState} from "react";
 import {NavLink, useHistory} from "react-router-dom";
 
 const Profile = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const {user} = useSelector(state => state.user.user);
+    const {user} = useSelector((state: any) => state.user.user);
 
-    const [nameValue, setNameValue] = useState(user.name);
-    const [emailValue, setEmailValue] = useState(user.email);
-    const [passwordValue, setPasswordValue] = useState('');
+    const [nameValue, setNameValue] = useState<string>(user.name);
+    const [emailValue, setEmailValue] = useState<string>(user.email);
+    const [passwordValue, setPasswordValue] = useState<string>('');
 
-    const handleChange = (evt) => {
-        if (evt.target.name === 'email') {
-            setEmailValue(evt.target.value);
-        } else if (evt.target.name === 'password') {
-            setPasswordValue('')
-        } else {
-            setNameValue(evt.target.value);
-        }
-    }
+    // const handleChange = (evt) => {
+    //     if (evt.target.name === 'email') {
+    //         setEmailValue(evt.target.value);
+    //     } else if (evt.target.name === 'password') {
+    //         setPasswordValue('')
+    //     } else {
+    //         setNameValue(evt.target.value);
+    //     }
+    // }
 
-    const handleLogOut = (evt) => {
+    const handleLogOut = (evt: React.FormEvent) => {
         evt.preventDefault();
 
+        // @ts-ignore
         dispatch(logOut());
     }
 
-    const handleChangeInfo = (evt, email, name) => {
+    const handleChangeInfo = (evt: React.FormEvent, email: string, name: string) => {
         evt.preventDefault();
 
+        // @ts-ignore
         dispatch(updateUser(email, name));
     }
 
-    const handleCancel = (evt) => {
+    const handleCancel = (evt: React.FormEvent) => {
         evt.preventDefault();
 
         setNameValue(user.name);
@@ -65,31 +67,33 @@ const Profile = () => {
                 </div>
 
                 <form onSubmit={(evt) => handleChangeInfo(evt, emailValue, nameValue)} className={styles.form}>
-                    <Input onChange={(evt) => handleChange(evt)}
+                    <Input onChange={(evt) => setNameValue(evt.target.value)}
                            placeholder='Имя'
                            value={nameValue}
                            name='name'
                            icon={"EditIcon"}
                     />
                     <Input
-                        onChange={(evt) => handleChange(evt)}
+                        onChange={(evt) => setEmailValue(evt.target.value)}
                         placeholder='Логин'
                         value={emailValue}
                         name='email'
                         icon={"EditIcon"}
                     />
                     <Input
-                        onChange={(evt) => handleChange(evt)}
+                        onChange={(evt) => setPasswordValue(evt.target.value)}
                         placeholder='Пароль'
                         value=''
                         name='password'
                         icon={"HideIcon"}
                     />
 
+                    {/* @ts-ignore */}
                     <Button
                             size={"medium"}>
                         Сохранить
                     </Button>
+                    {/* @ts-ignore */}
                     <Button onClick={(evt) => handleCancel(evt)}
                             size={"medium"}>
                         Отменить
