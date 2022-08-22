@@ -1,7 +1,7 @@
 import styles from './ingredient-details.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {getItems} from "../../services/actions/ingredients";
 import {IIngredient} from "../../interface/interface";
 

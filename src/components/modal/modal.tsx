@@ -34,7 +34,7 @@ const Modal: React.FC<IModal> = ({children, isOpen, setIsOpen, close}) => {
            <ModalOverlay close={close}>
                <div className={`${styles.wrapper}`}>
                    <button
-                       onClick={() => setIsOpen(false)}
+                       onClick={() => close()}
                        className={styles.button}>
                        <CloseIcon type="primary" />
                    </button>

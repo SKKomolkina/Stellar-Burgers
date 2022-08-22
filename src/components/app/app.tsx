@@ -83,7 +83,7 @@ const App = ():JSX.Element => {
             {background && (
                     <Route path='/ingredients/:id' children={
                         <Modal setIsOpen={setOpenInfo} isOpen={openInfo} close={closeAllModals}>
-                            <IngredientDetails/>
+                            <IngredientDetails />
                         </Modal>
                     }/>
             )}
