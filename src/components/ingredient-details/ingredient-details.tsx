@@ -23,7 +23,7 @@ const IngredientDetails = () => {
 
     const dispatch = useDispatch();
     const {ingredients} = useSelector((state: any) => ({ingredients: state.ingredients.items}));
-    const {id} = useParams<any>();
+    const {id}: {id: string} = useParams();
 
     // const selected = useMemo(() => {
     //     return ingredients.find((i) => i._id === ingredientId);

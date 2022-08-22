@@ -2,7 +2,8 @@ import React, {useState, useRef, useEffect} from "react";
 import {registration} from "../../../services/actions/user";
 
 import styles from '../auth.module.css';
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from "../../../components/button-ui";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -77,7 +78,6 @@ const SignUp = () => {
                     type={"password"}
                 />
 
-                {/* @ts-ignore */}
                 <Button type="primary" size="medium">
                     Зарегистрироваться
                 </Button>

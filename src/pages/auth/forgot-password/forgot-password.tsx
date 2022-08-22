@@ -3,7 +3,8 @@ import {forgotPasswordRequest} from "../../../utils/auth";
 import {useHistory, useLocation} from "react-router-dom";
 
 import styles from '../auth.module.css';
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from "../../../components/button-ui";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {forgotPassword} from "../../../services/actions/user";
@@ -52,7 +53,6 @@ const ForgotPassword = () => {
                     // required={true}
                 />
 
-                {/* @ts-ignore */}
                 <Button
                         type="primary" size="medium">
                     Восстановить

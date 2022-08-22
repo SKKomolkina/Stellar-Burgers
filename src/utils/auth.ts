@@ -2,13 +2,13 @@ import {checkResult} from "./api";
 import {baseUrl} from "./urls";
 import {getCookie, setCookie, deleteCookie} from "./utils";
 
-export const updateUserInfoRequest = (email, name) => {
+export const updateUserInfoRequest = (email: string, name: string) => {
     return fetch(`${baseUrl}/auth/user`, {
         method: 'PATCH',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            authorization: getCookie('accessToken'),
+            authorization: `${getCookie('accessToken')}`,
         },
         body: JSON.stringify({email, name}),
     })
@@ -16,7 +16,7 @@ export const updateUserInfoRequest = (email, name) => {
         .then(res => res)
 }
 
-export const registrationRequest = (email, password, name) => {
+export const registrationRequest = (email: string, password: string, name: string) => {
     return fetch(`${baseUrl}/auth/register`, {
         method: 'POST',
         mode: 'cors',
@@ -30,7 +30,7 @@ export const registrationRequest = (email, password, name) => {
         .then(res => res)
 }
 
-export const loginRequest = (email, password) => {
+export const loginRequest = (email: string, password: string) => {
     return fetch(`${baseUrl}/auth/login`, {
         method: 'POST',
         mode: 'cors',
@@ -73,7 +73,7 @@ export const userRequest = () => {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            authorization: getCookie('accessToken')
+            authorization: `${getCookie('accessToken')}`,
         },
     })
         .then(data => checkResult(data))
@@ -84,7 +84,7 @@ export const userRequest = () => {
     // })
 }
 
-export const forgotPasswordRequest = (email) => {
+export const forgotPasswordRequest = (email: string) => {
     return fetch(`${baseUrl}/password-reset`, {
         method: 'POST',
         headers: {
@@ -97,7 +97,7 @@ export const forgotPasswordRequest = (email) => {
         .then(res => res.data)
 }
 
-export const resetPasswordRequest = (password, token) => {
+export const resetPasswordRequest = (password: string, token: string) => {
     return fetch(`${baseUrl}/password-reset/reset`, {
         method: 'POST',
         headers: {

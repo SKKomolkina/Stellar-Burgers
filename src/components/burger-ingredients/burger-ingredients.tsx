@@ -29,10 +29,10 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({openModal}) => {
         threshold: 0,
     });
     const [mainsRef, inViewMains] = useInView({
-        threshold: 0,
+        threshold: 0.4,
     });
     const [saucesRef, inViewSauces] = useInView({
-        threshold: 0,
+        threshold: 0.8,
     });
 
     const filterIngredients = (arr: [], itemType: string) => {
@@ -62,7 +62,7 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({openModal}) => {
     return (
         <section className={styles.main}>
             <h1 className='text text_type_main-large mb-10'>Соберите бургер</h1>
-            <MainTab currentTab={currentTab} />
+            <MainTab currentTab={currentTab} setCurrentTab={setCurrentTab} />
 
             <ul className={styles.list} ref={sectionRef}>
                 <li className={styles.listItem}>

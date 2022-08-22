@@ -1,5 +1,6 @@
 import styles from './profile.module.css';
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from "../../components/button-ui";
 import {useDispatch, useSelector} from "react-redux";
 import {logOut, updateUser} from "../../services/actions/user";
 import React, {useState} from "react";
@@ -88,12 +89,10 @@ const Profile = () => {
                         icon={"HideIcon"}
                     />
 
-                    {/* @ts-ignore */}
                     <Button
                             size={"medium"}>
                         Сохранить
                     </Button>
-                    {/* @ts-ignore */}
                     <Button onClick={(evt) => handleCancel(evt)}
                             size={"medium"}>
                         Отменить

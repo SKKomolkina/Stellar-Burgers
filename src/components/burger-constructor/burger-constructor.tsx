@@ -3,8 +3,8 @@ import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {v4 as uuidv4} from 'uuid';
 
-import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-
+import {ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from "../button-ui";
 import styles from './burger-constructor.module.css';
 
 import {addBun, addIngredient, resetConstructor} from "../../services/actions/constructor";
@@ -61,7 +61,7 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({openModal}): JSX.
         return (
             (bun ? bun.price * 2 : 0) + ingredients.reduce((a: number, b: IIngredient) => a + b.price, 0)
         )
-    }, [bun, ingredients]);
+    }, [ingredients, bun]);
 
     useEffect(() => {
         if (ingredients.length >= 1 && bun) {
@@ -69,13 +69,15 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({openModal}): JSX.
         } else {
             setDisabledButton(true);
         }
+
+        console.log(priceCounter);
     }, [ingredients, bun]);
 
     return (
         <section className={`${styles.main} pl-4 pr-4`}>
             <div className={'mt-25 mb-10'}>
                 <div ref={dropTarget} style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
-                    {bun ? (
+                    {bun._id ? (
                             <ConstructorElement
                                 type="top"
                                 isLocked={true}
@@ -83,8 +85,7 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({openModal}): JSX.
                                 price={bun.price}
                                 thumbnail={bun.image}
                             />
-                        ) :
-                        (
+                        ) : (
                             <div className={styles.noBunsTop}>
                                 <p className={'text text_type_main-default'}>Выберите булку</p>
                             </div>
@@ -104,7 +105,7 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({openModal}): JSX.
                             )) : null}
                     </ul>
 
-                    {bun ? (
+                    {bun._id ? (
                             <ConstructorElement
                                 type="bottom"
                                 isLocked={true}
@@ -122,18 +123,21 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({openModal}): JSX.
                 </div>
             </div>
 
-            <div className={styles.counter}>
-                <div className={`${styles.price} mr-10`}>
-                    <p className='text text_type_main-medium'>
-                        {priceCounter}
-                    </p>
-                    <CurrencyIcon type="primary"/>
+            {
+                (ingredients.length > 0 && bun._id) &&
+
+                <div className={styles.counter}>
+                    <div className={`${styles.price} mr-10`}>
+                        <p className='text text_type_main-medium'>
+                            {priceCounter}
+                        </p>
+                        <CurrencyIcon type="primary"/>
+                    </div>
+                    <Button disabled={disabledButton} onClick={sendOrderRequest} type="primary" size="medium">
+                        Оформить заказ
+                    </Button>
                 </div>
-                {/* @ts-ignore */}
-                <Button disabled={disabledButton} onClick={sendOrderRequest} type="primary" size="medium">
-                    Оформить заказ
-                </Button>
-            </div>
+            }
         </section>
     )
 }

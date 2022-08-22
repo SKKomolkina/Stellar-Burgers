@@ -1,23 +1,21 @@
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {useEffect} from "react";
+import React from "react";
+import {Tab} from "../tab-ui";
 
 interface IMainTab {
     currentTab: string;
+    setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const MainTab: React.FC<IMainTab> = ({currentTab}) => {
+const MainTab: React.FC<IMainTab> = ({currentTab, setCurrentTab}) => {
     return (
         <div style={{ display: 'flex' }}>
-            {/* @ts-ignore */}
-            <Tab active={currentTab === 'buns'} value='buns'>
+            <Tab onClick={() => setCurrentTab('buns')} active={currentTab === 'buns'} value='buns'>
                 Булки
             </Tab>
-            {/* @ts-ignore */}
-            <Tab active={currentTab === 'sauces'} value='sauces'>
+            <Tab onClick={() => setCurrentTab('sauces')} active={currentTab === 'sauces'} value='sauces'>
                 Соусы
             </Tab>
-            {/* @ts-ignore */}
-            <Tab active={currentTab === 'mains'} value='mains'>
+            <Tab onClick={() => setCurrentTab('mains')} active={currentTab === 'mains'} value='mains'>
                 Начинки
             </Tab>
         </div>

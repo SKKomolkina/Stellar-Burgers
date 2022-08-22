@@ -1,7 +1,8 @@
 import React, {useState, useRef, useEffect} from "react";
 
 import styles from '../auth.module.css';
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from "../../../components/button-ui";
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {resetPassword} from "../../../services/actions/user";
@@ -59,7 +60,6 @@ const ResetPassword = () => {
                     type={"text"}
                 />
 
-                {/* @ts-ignore */}
                 <Button type="primary" size="medium">
                     Сохранить
                 </Button>

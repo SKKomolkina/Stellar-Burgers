@@ -11,12 +11,10 @@ const AppHeader: React.FC = () => {
         <header className={`${styles.header}`}>
             <div className={styles.wrapper}>
                 <nav className={`${styles.navigation}`}>
-                    {/* @ts-ignore */}
-                    <NavItem to='/' text='Конструктор'>
+                    <NavItem link='/' text='Конструктор'>
                         <BurgerIcon type={'secondary'}/>
                     </NavItem>
-                    {/* @ts-ignore */}
-                    <NavItem to='/' text='Лента заказов'>
+                    <NavItem link='/' text='Лента заказов'>
                         <ListIcon type={'secondary'}/>
                     </NavItem>
                 </nav>
@@ -25,7 +23,6 @@ const AppHeader: React.FC = () => {
                     <Link to='/'><Logo/></Link>
                 </div>
 
-                {/* @ts-ignore */}
                 <NavItem text='Личный кабинет' link='/profile'>
                     <ProfileIcon type={'secondary'}/>
                 </NavItem>

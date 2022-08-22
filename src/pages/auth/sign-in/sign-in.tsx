@@ -1,7 +1,8 @@
 import React, {useState, useRef, useEffect, useCallback} from "react";
 
 import styles from '../auth.module.css';
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from "../../../components/button-ui";
 
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -81,7 +82,6 @@ const SignIn = () => {
                     type={"password"}
                 />
 
-                {/* @ts-ignore */}
                 <Button disabled={disabledButton}
                         type="primary"
                         size="medium">
