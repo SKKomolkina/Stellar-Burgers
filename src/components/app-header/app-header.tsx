@@ -6,15 +6,15 @@ import NavItem from "../nav-item/nav-item";
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
 
-const AppHeader = () => {
+const AppHeader: React.FC = () => {
     return (
         <header className={`${styles.header}`}>
             <div className={styles.wrapper}>
                 <nav className={`${styles.navigation}`}>
-                    <NavItem to='/' text='Конструктор'>
+                    <NavItem link='/' text='Конструктор'>
                         <BurgerIcon type={'secondary'}/>
                     </NavItem>
-                    <NavItem to='/' text='Лента заказов'>
+                    <NavItem link='/' text='Лента заказов'>
                         <ListIcon type={'secondary'}/>
                     </NavItem>
                 </nav>

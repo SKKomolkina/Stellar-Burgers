@@ -2,7 +2,7 @@ import { ADD_ITEM, DELETE_ITEM, ADD_BUN, SORT_ITEMS, RESET_CONSTRUCTOR } from ".
 
 const initialState = {
     ingredients: [],
-    bun: null,
+    bun: {},
 }
 
 export const constructorReducer = (state = initialState, action) => {

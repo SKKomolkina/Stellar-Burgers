@@ -1,17 +1,29 @@
-import PropTypes from "prop-types";
-
 import styles from './ingredient-details.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {getItems} from "../../services/actions/ingredients";
+import {IIngredient} from "../../interface/interface";
 
 const IngredientDetails = () => {
-    const [ingredient, setIngredient] = useState({});
+    const [ingredient, setIngredient] = useState<IIngredient>({
+        _id: "",
+        calories: 0,
+        carbohydrates: 0,
+        fat: 0,
+        image: "",
+        image_large: "",
+        image_mobile: "",
+        name: "",
+        price: 0,
+        proteins: 0,
+        type: "",
+        uuid: 0
+    });
 
     const dispatch = useDispatch();
-    const {ingredients} = useSelector(state => ({ingredients: state.ingredients.items}));
-    const {id} = useParams();
+    const {ingredients} = useSelector((state: any) => ({ingredients: state.ingredients.items}));
+    const {id}: {id: string} = useParams();
 
     // const selected = useMemo(() => {
     //     return ingredients.find((i) => i._id === ingredientId);
@@ -19,7 +31,7 @@ const IngredientDetails = () => {
 
     useEffect(() => {
         if(!id || ingredients.ingredients < 1) return;
-        const selected = ingredients.find(i => i._id === id);
+        const selected = ingredients.find((i: IIngredient) => i._id === id);
         selected && setIngredient(selected);
     }, [id, ingredients]);
 
@@ -49,9 +61,6 @@ const IngredientDetails = () => {
             </ul>
         </div>
     )
-}
-
-IngredientDetails.propTypes = {
 }
 
 export default IngredientDetails;

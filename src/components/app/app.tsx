@@ -1,16 +1,15 @@
 import {useEffect, useState} from "react";
 import {getItems} from "../../services/actions/ingredients";
 import {useDispatch, useSelector} from "react-redux";
-
+import {Redirect, Route, Switch, useHistory, useLocation} from "react-router-dom";
+import {Location} from "history";
 import styles from './app.module.css';
 
 import AppHeader from "../app-header/app-header";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-
 import Main from "../../pages/main/main";
-import {Redirect, Route, Switch, useHistory, useLocation} from "react-router-dom";
 import SignIn from "../../pages/auth/sign-in/sign-in";
 import SignUp from "../../pages/auth/sign-up/sign-up";
 import ForgotPassword from "../../pages/auth/forgot-password/forgot-password";
@@ -19,25 +18,21 @@ import ProtectedRoute from "../protected-route/protected-route";
 import {getUser} from "../../services/actions/user";
 import Profile from "../../pages/profile/profile";
 import {getCookie} from "../../utils/utils";
-import {updateTokenRequest} from "../../utils/auth";
 import IngredientPage from "../ingredient-page/ingredient-page";
 
-
-function App() {
+const App = ():JSX.Element => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const location = useLocation();
+    const location = useLocation<{background: Location}>();
     const background = location.state && location.state.background;
 
-    const {userState, forgotPassword} = useSelector(state => ({
+    const {userState, forgotPassword} = useSelector((state: any) => ({
         userState: state.user.authSuccess,
         forgotPassword: state.user.forgotPassword,
     }));
 
-    const [openOrder, setOpenOrder] = useState(false);
-    const [openInfo, setOpenInfo] = useState(false);
-
-    const [resetPassword, setResetPassword] = useState(false);
+    const [openOrder, setOpenOrder] = useState<boolean>(false);
+    const [openInfo, setOpenInfo] = useState<boolean>(false);
 
     const closeAllModals = () => {
         setOpenInfo(false);
@@ -46,11 +41,13 @@ function App() {
     }
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(getItems())
     }, [dispatch]);
 
     useEffect(() => {
         if (!userState && getCookie('accessToken')) {
+            // @ts-ignore
             dispatch(getUser())
         }
     }, [dispatch, userState]);
@@ -69,7 +66,7 @@ function App() {
                     {!userState ? <SignUp/> : <Redirect to='/'/>}
                 </Route>
                 <Route exact={true} path='/forgot-password'>
-                    {!userState ? <ForgotPassword setResetPassword={setResetPassword}/> : <Redirect to='/'/>}
+                    {!userState ? <ForgotPassword /> : <Redirect to='/'/>}
                 </Route>
                 <Route exact={true} path='/reset-password'>
                     {forgotPassword ? <ResetPassword/> : <Redirect to='/forgot-password'/>}
@@ -86,7 +83,7 @@ function App() {
             {background && (
                     <Route path='/ingredients/:id' children={
                         <Modal setIsOpen={setOpenInfo} isOpen={openInfo} close={closeAllModals}>
-                            <IngredientDetails/>
+                            <IngredientDetails />
                         </Modal>
                     }/>
             )}

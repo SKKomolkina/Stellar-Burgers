@@ -4,7 +4,7 @@ import done from "../../images/done.svg";
 import {useSelector} from "react-redux";
 
 const OrderDetails = () => {
-    const {orderNumber, orderName} = useSelector(state => ({
+    const {orderNumber, orderName} = useSelector((state: any) => ({
         ...state,
         orderName: state.order.order.name,
         orderNumber: state.order.order.order.number,

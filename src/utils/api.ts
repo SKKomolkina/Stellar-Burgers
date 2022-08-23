@@ -14,7 +14,7 @@ export const getIngredients = () => {
         })
 }
 
-export const sendOrder = (ingredients) => {
+export const sendOrder = (ingredients: string[]) => {
     return fetch(`${baseUrl}/orders`, {
         method: 'POST',
         headers: {
@@ -26,7 +26,7 @@ export const sendOrder = (ingredients) => {
         .then(data => checkResult(data));
 }
 
-export const checkResult = (res) => {
+export const checkResult = (res: Response) => {
     if (res.ok) {
         return res.json();
     }

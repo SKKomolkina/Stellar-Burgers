@@ -1,8 +1,9 @@
-import {useState, useRef, useEffect} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {registration} from "../../../services/actions/user";
 
 import styles from '../auth.module.css';
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from "../../../components/button-ui";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -10,46 +11,42 @@ const SignUp = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const {user} = useSelector(store => store.user);
-    const {userState} = useSelector(state => ({
+    const {user} = useSelector((store: any) => store.user);
+    const {userState} = useSelector((state: any) => ({
         userState: state.user.authSuccess,
     }));
 
-    const [nameValue, setNameValue] = useState('');
-    const nameRef = useRef(null);
+    const [nameValue, setNameValue] = useState<string>('');
+    const nameRef = useRef<HTMLInputElement>(null);
 
-    const [emailValue, setEmailValue] = useState('');
-    const emailRef = useRef(null);
+    const [emailValue, setEmailValue] = useState<string>('');
+    const emailRef = useRef<HTMLInputElement>(null);
 
-    const [passwordValue, setPasswordValue] = useState('');
-    const passwordRef = useRef(null);
+    const [passwordValue, setPasswordValue] = useState<string>('');
+    const passwordRef = useRef<HTMLInputElement>(null);
 
-    const handleChange = (evt) => {
-        if (evt.target.name === 'email') {
-            setEmailValue(evt.target.value);
-        } else if (evt.target.name === 'name') {
-            setNameValue(evt.target.value);
-        } else {
-            setPasswordValue(evt.target.value);
-        }
-    }
+    // const handleChange = (evt: React.FormEvent) => {
+    //     if (evt.target.name === 'email') {
+    //         setEmailValue(evt.target.value);
+    //     } else if (evt.target.name === 'name') {
+    //         setNameValue(evt.target.value);
+    //     } else {
+    //         setPasswordValue(evt.target.value);
+    //     }
+    // }
 
-    const handleSignUp = (evt, email, password, name) => {
+    const handleSignUp = (evt: React.FormEvent, email: string, password: string, name: string) => {
         evt.preventDefault();
 
+        // @ts-ignore
         dispatch(registration(email, password, name))
         history.push('/sign-in');
     }
 
     if (userState) {
+        // @ts-ignore
         return <Redirect to={history?.location?.state?.from || '/'} />;
     }
-
-    // useEffect(() => {
-    //     setNameValue('');
-    //     setEmailValue('');
-    //     setPasswordValue('');
-    // }, []);
 
     return (
         <main className={styles.main}>
@@ -58,7 +55,7 @@ const SignUp = () => {
                 <Input
                     ref={nameRef}
                     value={nameValue}
-                    onChange={(evt) =>handleChange(evt)}
+                    onChange={(evt) => setNameValue(evt.target.value)}
                     placeholder='Имя'
                     name='name'
                     type={"text"}
@@ -66,7 +63,7 @@ const SignUp = () => {
                 <Input
                     ref={emailRef}
                     value={emailValue}
-                    onChange={(evt) =>handleChange(evt)}
+                    onChange={(evt) => setEmailValue(evt.target.value)}
                     placeholder='E-mail'
                     name='email'
                     type={"email"}
@@ -74,7 +71,7 @@ const SignUp = () => {
                 <Input
                     ref={passwordRef}
                     value={passwordValue}
-                    onChange={(evt) =>handleChange(evt)}
+                    onChange={(evt) => setPasswordValue(evt.target.value)}
                     placeholder='Password'
                     name='password'
                     icon={"HideIcon"}

@@ -1,6 +1,5 @@
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 
 import styles from './modal.module.css';
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -9,10 +8,17 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 
 const modalContainer = document.getElementById('react-modals');
 
-const Modal = ({children, isOpen, setIsOpen, close}) => {
+interface IModal {
+    children: any;
+    isOpen: boolean;
+    setIsOpen: Dispatch<SetStateAction<boolean>>;
+    close: () => void;
+}
+
+const Modal: React.FC<IModal> = ({children, isOpen, setIsOpen, close}) => {
 
     React.useEffect(() => {
-        const closeByEsc = (evt) => {
+        const closeByEsc = (evt: KeyboardEvent) => {
             if (evt.key === 'Escape') {
                 close();
             }
@@ -28,7 +34,7 @@ const Modal = ({children, isOpen, setIsOpen, close}) => {
            <ModalOverlay close={close}>
                <div className={`${styles.wrapper}`}>
                    <button
-                       onClick={() => setIsOpen(false)}
+                       onClick={() => close()}
                        className={styles.button}>
                        <CloseIcon type="primary" />
                    </button>
@@ -38,13 +44,6 @@ const Modal = ({children, isOpen, setIsOpen, close}) => {
            </ModalOverlay>
        </div>,
        modalContainer) : null
-}
-
-Modal.propTypes = {
-    children: PropTypes.element.isRequired,
-    isOpen: PropTypes.bool,
-    setIsOpen: PropTypes.func,
-    close: PropTypes.func,
 }
 
 export default Modal;

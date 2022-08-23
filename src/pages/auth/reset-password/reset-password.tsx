@@ -1,7 +1,8 @@
-import {useState, useRef, useEffect} from "react";
+import React, {useState, useRef, useEffect} from "react";
 
 import styles from '../auth.module.css';
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from "../../../components/button-ui";
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {resetPassword} from "../../../services/actions/user";
@@ -10,23 +11,24 @@ const ResetPassword = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [passwordValue, setPasswordValue] = useState('');
-    const passwordRef = useRef(null);
+    const [passwordValue, setPasswordValue] = useState<string>('');
+    const passwordRef = useRef<HTMLInputElement>(null);
 
-    const [codeValue, setCodeValue] = useState('');
-    const codeRef = useRef(null);
+    const [codeValue, setCodeValue] = useState<string>('');
+    const codeRef = useRef<HTMLInputElement>(null);
 
-    const handleChange = (evt) => {
-        if (evt.target.name === 'password') {
-            setPasswordValue(evt.target.value)
-        } else {
-            setCodeValue(evt.target.value);
-        }
-    }
+    // const handleChange = (evt) => {
+    //     if (evt.target.name === 'password') {
+    //         setPasswordValue(evt.target.value)
+    //     } else {
+    //         setCodeValue(evt.target.value);
+    //     }
+    // }
 
-    const sendResetPasswordRequest = (evt, password, token) => {
+    const sendResetPasswordRequest = (evt: React.FormEvent, password: string, token: string) => {
         evt.preventDefault();
 
+        // @ts-ignore
         dispatch(resetPassword(password, token))
         history.push('/sign-in');
     }
@@ -43,7 +45,7 @@ const ResetPassword = () => {
                 <Input
                     ref={passwordRef}
                     value={passwordValue}
-                    onChange={handleChange}
+                    onChange={(evt) => setPasswordValue(evt.target.value)}
                     placeholder='Введите новый пароль'
                     name='password'
                     icon={"HideIcon"}
@@ -52,7 +54,7 @@ const ResetPassword = () => {
                 <Input
                     ref={codeRef}
                     value={codeValue}
-                    onChange={handleChange}
+                    onChange={(evt) => setCodeValue(evt.target.value)}
                     placeholder='Введите код из письма'
                     name='code'
                     type={"text"}
