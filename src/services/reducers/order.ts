@@ -1,13 +1,21 @@
-import {SEND_ORDER_REQUEST, SEND_ORDER_FAILED, SEND_ORDER_SUCCESS} from "../actions/order";
+import {SEND_ORDER_FAILED, SEND_ORDER_REQUEST, SEND_ORDER_SUCCESS} from "../constants/order";
+import {TOrderActions} from "../actions/order";
 
-const initialState = {
+type TOrderState = {
+    order: {};
+
+    orderRequest: boolean;
+    orderFailed: boolean;
+}
+
+const initialState: TOrderState = {
     order: {},
 
     orderRequest: false,
     orderFailed: false,
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
     switch(action.type) {
         case SEND_ORDER_REQUEST: {
             return {
@@ -20,7 +28,7 @@ export const orderReducer = (state = initialState, action) => {
             return {
                 orderRequest: false,
                 orderFailed: false,
-                order: action.payload,
+                order: action.order,
             }
         }
 

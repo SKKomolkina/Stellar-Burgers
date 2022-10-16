@@ -2,10 +2,8 @@ import React, {Dispatch, SetStateAction, useMemo} from "react";
 
 import styles from './ingredients-list.module.css';
 
-import {useSelector} from "react-redux";
-
 import IngredientItem from "../ingredient-item/ingredient-item";
-import {IIngredient} from "../../interface/interface";
+import {IIngredient} from "../../utils/interface/interface";
 
 interface IIngredientsList {
     title: string;

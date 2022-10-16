@@ -1,18 +1,23 @@
 import styles from './profile.module.css';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Button} from "../../components/button-ui";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {logOut, updateUser} from "../../services/actions/user";
 import React, {useState} from "react";
 import {NavLink, useHistory} from "react-router-dom";
+import ProfileNav from "../../components/profile-nav/profile-nav";
 
 const Profile = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const {user} = useSelector((state: any) => state.user.user);
+    const {user} = useSelector((state: any) => ({
+        user: state.user,
+    }));
 
-    const [nameValue, setNameValue] = useState<string>(user.name);
-    const [emailValue, setEmailValue] = useState<string>(user.email);
+    console.log(user);
+
+    const [nameValue, setNameValue] = useState<string>(user.user.name);
+    const [emailValue, setEmailValue] = useState<string>(user.user.email);
     const [passwordValue, setPasswordValue] = useState<string>('');
 
     // const handleChange = (evt) => {
@@ -25,17 +30,9 @@ const Profile = () => {
     //     }
     // }
 
-    const handleLogOut = (evt: React.FormEvent) => {
-        evt.preventDefault();
-
-        // @ts-ignore
-        dispatch(logOut());
-    }
-
     const handleChangeInfo = (evt: React.FormEvent, email: string, name: string) => {
         evt.preventDefault();
 
-        // @ts-ignore
         dispatch(updateUser(email, name));
     }
 
@@ -49,23 +46,7 @@ const Profile = () => {
     return (
         <main className={styles.main}>
             <div className={styles.container}>
-                <div className={styles.navigation}>
-                    <NavLink className={`text text_type_main-medium ${styles.link}`}
-                             activeClassName={`text text_type_main-medium text_color_inactive text_color_inactive ${styles.activeLink}`}
-                             to='/profile'>
-                        Профиль
-                    </NavLink>
-                    <NavLink to='/list' className={`text text_type_main-medium ${styles.link}`}
-                             activeClassName={`text text_type_main-medium text_color_inactive  ${styles.activeLink}`}>
-                        История заказов
-                    </NavLink>
-                    <NavLink to='/sign-in'
-                             className={`text text_type_main-medium ${styles.link}`}
-                             activeClassName={`text text_type_main-medium text_color_inactive  ${styles.activeLink}`}
-                             onClick={(evt) => handleLogOut(evt)}>
-                        Выход
-                    </NavLink>
-                </div>
+                <ProfileNav/>
 
                 <form onSubmit={(evt) => handleChangeInfo(evt, emailValue, nameValue)} className={styles.form}>
                     <Input onChange={(evt) => setNameValue(evt.target.value)}

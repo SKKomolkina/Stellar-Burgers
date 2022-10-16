@@ -1,4 +1,6 @@
 import {baseUrl} from "./urls";
+import {IIngredient} from "./interface/interface";
+import {getCookie} from "./utils";
 
 export const getIngredients = () => {
     return fetch(`${baseUrl}/ingredients`, {
@@ -14,10 +16,12 @@ export const getIngredients = () => {
         })
 }
 
-export const sendOrder = (ingredients: string[]) => {
-    return fetch(`${baseUrl}/orders`, {
+export const sendOrder = (ingredients: IIngredient[]) => {
+    // @ts-ignore
+    return fetch(`${baseUrl}/orders?token=${getCookie('accessToken').split(' ')[1]}`, {
         method: 'POST',
         headers: {
+            authorization: `${getCookie('accessToken')}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },

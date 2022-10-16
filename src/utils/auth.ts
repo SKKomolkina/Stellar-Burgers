@@ -36,7 +36,7 @@ export const loginRequest = (email: string, password: string) => {
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + getCookie('accessToken')
+            // Authorization: 'Bearer ' + getCookie('accessToken')
         },
         body: JSON.stringify({email, password}),
     })

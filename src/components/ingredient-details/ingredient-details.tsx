@@ -1,9 +1,9 @@
 import styles from './ingredient-details.module.css';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {useParams} from "react-router-dom";
 import React, {useEffect, useMemo, useState} from "react";
 import {getItems} from "../../services/actions/ingredients";
-import {IIngredient} from "../../interface/interface";
+import {IIngredient} from "../../utils/interface/interface";
 
 const IngredientDetails = () => {
     const [ingredient, setIngredient] = useState<IIngredient>({
@@ -18,11 +18,11 @@ const IngredientDetails = () => {
         price: 0,
         proteins: 0,
         type: "",
-        uuid: 0
+        uuid: ''
     });
 
     const dispatch = useDispatch();
-    const {ingredients} = useSelector((state: any) => ({ingredients: state.ingredients.items}));
+    const {ingredients} = useSelector((state: any) => ({ingredients: state.ingredients.ingredients}));
     const {id}: {id: string} = useParams();
 
     // const selected = useMemo(() => {

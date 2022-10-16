@@ -1,7 +1,7 @@
 import styles from './order-details.module.css';
 import done from "../../images/done.svg";
 
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/hooks";
 
 const OrderDetails = () => {
     const {orderNumber, orderName} = useSelector((state: any) => ({

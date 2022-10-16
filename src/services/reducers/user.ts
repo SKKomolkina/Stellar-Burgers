@@ -19,10 +19,25 @@ import {
     LOGOUT_FAILED,
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS, UPDATE_USER_FAILED
-} from "../actions/user";
+} from "../constants/user";
+import {IUser} from "../../utils/interface/interface";
+import {TUserActions} from "../actions/user";
 
-const initialState = {
-    user: {},
+type TUserState = {
+    user: IUser;
+
+    authRequest: boolean;
+    authFailed: boolean,
+    authSuccess: boolean,
+    forgotPassword: boolean,
+}
+
+const initialState: TUserState = {
+    user: {
+        name: '',
+        password: '',
+        email: '',
+    },
 
     authRequest: false,
     authFailed: false,
@@ -30,7 +45,7 @@ const initialState = {
     forgotPassword: false,
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions): TUserState => {
     switch (action.type) {
         case REGISTRATION_REQUEST: {
             return {
@@ -71,7 +86,7 @@ export const userReducer = (state = initialState, action) => {
                 authRequest: false,
                 authFailed: false,
                 authSuccess: true,
-                user: action,
+                user: action.user,
             }
         }
 
@@ -93,6 +108,7 @@ export const userReducer = (state = initialState, action) => {
 
         case USER_SUCCESS: {
             return {
+                ...state,
                 authRequest: false,
                 authFailed: false,
                 authSuccess: true,
@@ -106,7 +122,6 @@ export const userReducer = (state = initialState, action) => {
                 authRequest: false,
                 authFailed: true,
                 authSuccess: false,
-                user: {},
             }
         }
 
@@ -176,7 +191,11 @@ export const userReducer = (state = initialState, action) => {
         case LOGOUT_SUCCESS: {
            return {
                ...state,
-               user: {},
+               user: {
+                   name: '',
+                   password: '',
+                   email: '',
+               },
                authSuccess: false,
            }
         }
