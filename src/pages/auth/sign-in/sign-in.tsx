@@ -5,7 +5,7 @@ import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Button} from "../../../components/button-ui";
 
 import {Link, Redirect, useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../../services/hooks";
 import {getUser, login} from "../../../services/actions/user";
 
 const SignIn = () => {
@@ -24,19 +24,9 @@ const SignIn = () => {
 
     const [disabledButton, setDisabledButton] = useState<boolean>(false);
 
-    // const handleChange = (evt) => {
-    //     if (evt.target.name === 'email') {
-    //         setEmailValue(evt.target.value);
-    //     } else {
-    //         setPasswordValue(evt.target.value);
-    //     }
-    //     setDisabledButton(false);
-    // }
-
     const handleSignIn = (evt: React.FormEvent, email: string, password: string) => {
         evt.preventDefault();
 
-        // @ts-ignore
         dispatch(login(email, password));
         setDisabledButton(true);
     }
@@ -62,7 +52,8 @@ const SignIn = () => {
 
     return (
         <main className={styles.main}>
-            <form onSubmit={(evt) => handleSignIn(evt, emailValue, passwordValue)} className={styles.form}>
+            <form onSubmit={(evt) => handleSignIn(evt, emailValue, passwordValue)}
+                  className={styles.form}>
                 <h1 className={'text text_type_main-medium mb-2'}>Вход</h1>
                 <Input
                     ref={emailRef}

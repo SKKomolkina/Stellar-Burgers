@@ -5,7 +5,7 @@ import styles from '../auth.module.css';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Button} from "../../../components/button-ui";
 import {Link, Redirect, useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../../services/hooks";
 
 const SignUp = () => {
     const history = useHistory();
@@ -38,7 +38,6 @@ const SignUp = () => {
     const handleSignUp = (evt: React.FormEvent, email: string, password: string, name: string) => {
         evt.preventDefault();
 
-        // @ts-ignore
         dispatch(registration(email, password, name))
         history.push('/sign-in');
     }

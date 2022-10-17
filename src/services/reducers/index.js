@@ -2,14 +2,14 @@ import {combineReducers} from "redux";
 
 import {ingredientsReducer} from "./ingredients";
 import {constructorReducer} from "./constructor";
-import {ingredientDetailsModalReducer} from './ingredient-detail-modal';
 import {orderReducer} from "./order";
 import {userReducer} from "./user";
+import {feedReducer} from "./ws";
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
     orderConstructor: constructorReducer,
-    ingredientDetailsModal: ingredientDetailsModalReducer,
     order: orderReducer,
     user: userReducer,
-})
+    feed: feedReducer
+});

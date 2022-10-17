@@ -2,20 +2,19 @@ import React, {useEffect} from "react";
 
 import {Redirect, Route} from "react-router-dom";
 import {RouteProps} from "react-router";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {getUser} from "../../services/actions/user";
 
 const ProtectedRoute: React.FC<RouteProps> = ({children, path}) => {
     const dispatch = useDispatch();
 
     const {user} = useSelector((state: any) => ({
-        user: state.user.user.user,
+        user: state.user.authSuccess,
     }));
 
-    useEffect(() => {
-        // @ts-ignore
-        dispatch(getUser())
-    }, []);
+    // useEffect(() => {
+    //     dispatch(getUser())
+    // }, []);
 
     return (
         <Route

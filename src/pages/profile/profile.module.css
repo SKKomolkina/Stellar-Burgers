@@ -28,12 +28,13 @@
     height: 64px;
 
     text-decoration: none;
-    color: #F2F2F3;
+
+    color: #8585AD;
 }
 
 .activeLink {
     composes: link;
-    color: #8585AD;
+    color: #F2F2F3;
 }
 
 .form {

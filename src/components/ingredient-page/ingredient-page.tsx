@@ -1,10 +1,10 @@
 import styles from './ingredient-page.module.css';
 import {useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {useEffect, useState, useMemo} from "react";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {getItems} from "../../services/actions/ingredients";
-import {IIngredient} from "../../interface/interface";
+import {IIngredient} from "../../utils/interface/interface";
 
 const IngredientPage = () => {
     const [ingredient, setIngredient] = useState<IIngredient>({
@@ -19,12 +19,12 @@ const IngredientPage = () => {
         price: 0,
         proteins: 0,
         type: "",
-        uuid: 0
+        uuid: ''
     });
 
     const {id} = useParams<any>();
     const dispatch = useDispatch();
-    const {ingredients} = useSelector((state: any) => ({ingredients: state.ingredients.items}));
+    const {ingredients} = useSelector((state: any) => ({ingredients: state.ingredients.ingredients}));
 
     // useEffect(() => {
     //     dispatch(getItems());

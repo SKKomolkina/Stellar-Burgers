@@ -14,7 +14,7 @@ const AppHeader: React.FC = () => {
                     <NavItem link='/' text='Конструктор'>
                         <BurgerIcon type={'secondary'}/>
                     </NavItem>
-                    <NavItem link='/' text='Лента заказов'>
+                    <NavItem link='/feed' text='Лента заказов'>
                         <ListIcon type={'secondary'}/>
                     </NavItem>
                 </nav>

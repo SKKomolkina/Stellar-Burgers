@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from "react";
 import {useDrop} from "react-dnd";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {v4 as uuidv4} from 'uuid';
 
 import {ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -11,7 +11,8 @@ import {addBun, addIngredient, resetConstructor} from "../../services/actions/co
 import AddedIngredient from "../added-ingredient/added-ingredient";
 import {sendItems} from "../../services/actions/order";
 import {useHistory} from "react-router-dom";
-import {IIngredient} from "../../interface/interface";
+import {IIngredient} from "../../utils/interface/interface";
+import {getCookie} from "../../utils/utils";
 
 interface IBurgerConstructorProps {
     openModal: Dispatch<SetStateAction<boolean>>;
@@ -41,7 +42,6 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({openModal}): JSX.
             const bunId = bun._id;
             const idArr = [...ingredientsId, bunId];
 
-            // @ts-ignore
             dispatch(sendItems(idArr, openModal));
         } else {
             history.push('/sign-in');
@@ -69,8 +69,6 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({openModal}): JSX.
         } else {
             setDisabledButton(true);
         }
-
-        console.log(priceCounter);
     }, [ingredients, bun]);
 
     return (
@@ -93,16 +91,15 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({openModal}): JSX.
                     }
 
                     <ul className={styles.list}>
-                        {!ingredients.length &&
+                        {!ingredients.length ?
                             (<li className={`${styles.item} mb-4`}>
                                 <div className={styles.noIngredient}>
                                     <p className={'text text_type_main-default'}>Добавьте ингредиент</p>
                                 </div>
-                            </li>)}
-                        {ingredients.length ?
+                            </li>) :
                             (ingredients.map((item: IIngredient, index: number) =>
                                 <AddedIngredient key={item.uuid} item={item} index={index}/>
-                            )) : null}
+                            ))}
                     </ul>
 
                     {bun._id ? (

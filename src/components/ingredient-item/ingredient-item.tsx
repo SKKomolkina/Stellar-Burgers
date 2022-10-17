@@ -1,12 +1,12 @@
 import styles from "./ingredient-item.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {useDrag} from "react-dnd";
 import {getSelectedItem} from "../../services/actions/ingredients";
 import {Link, useLocation} from "react-router-dom";
 import React, {Dispatch, SetStateAction, useMemo} from "react";
-import {IIngredient} from "../../interface/interface";
+import {IIngredient} from "../../utils/interface/interface";
 
 interface IIngredientItem {
     item: IIngredient;

@@ -4,7 +4,7 @@ import styles from '../auth.module.css';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Button} from "../../../components/button-ui";
 import {Link, useHistory} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch} from "../../../services/hooks";
 import {resetPassword} from "../../../services/actions/user";
 
 const ResetPassword = () => {
@@ -28,7 +28,6 @@ const ResetPassword = () => {
     const sendResetPasswordRequest = (evt: React.FormEvent, password: string, token: string) => {
         evt.preventDefault();
 
-        // @ts-ignore
         dispatch(resetPassword(password, token))
         history.push('/sign-in');
     }

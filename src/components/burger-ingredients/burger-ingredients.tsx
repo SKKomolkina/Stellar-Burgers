@@ -1,12 +1,12 @@
 import React, {Dispatch, SetStateAction, useRef, useState} from "react";
 import {useInView} from "react-intersection-observer";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/hooks";
 
 import styles from './burger-ingredients.module.css';
 
 import MainTab from "../main-tab/main-tab";
 import IngredientsList from "../ingredients-list/ingredients-list";
-import {IIngredient} from "../../interface/interface";
+import {IIngredient} from "../../utils/interface/interface";
 
 interface IBurgerIngredientsProps {
     openModal: Dispatch<SetStateAction<boolean>>;
@@ -14,7 +14,7 @@ interface IBurgerIngredientsProps {
 
 const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({openModal}) => {
     const {ingredients} = useSelector((state: any) => ({
-        ingredients: state.ingredients.items,
+        ingredients: state.ingredients.ingredients,
     }));
 
     const sectionRef = useRef(null);

@@ -1,13 +1,14 @@
 import styles from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {useDispatch} from "react-redux";
+import {useDispatch} from "../../services/hooks";
 import React, {useRef} from "react";
 
-import {removeIngredient, SORT_ITEMS} from "../../services/actions/constructor";
+import {removeIngredient} from "../../services/actions/constructor";
 import {useDrag, useDrop} from "react-dnd";
 
-import {IIngredient} from '../../interface/interface';
+import {IIngredient} from '../../utils/interface/interface';
+import {SORT_ITEMS} from "../../services/constants/constructor";
 
 interface IAddedIngredient {
     item: IIngredient;
@@ -61,13 +62,13 @@ const AddedIngredient: React.FC<IAddedIngredient> = ({item , index}) => {
                 return;
             }
 
-            dispatch({
-                type: SORT_ITEMS,
-                payload: {
-                    from: dragIndex,
-                    to: hoverIndex,
-                }
-            });
+            // dispatch({
+            //     type: SORT_ITEMS,
+            //     payload: {
+            //         from: dragIndex,
+            //         to: hoverIndex,
+            //     }
+            // });
             item.index = hoverIndex;
         }
     });
@@ -84,8 +85,9 @@ const AddedIngredient: React.FC<IAddedIngredient> = ({item , index}) => {
     const opacity = isDragging ? 0 :1;
     drag(drop(ref));
 
-    const handleDelete = (uuid: number) => {
-        dispatch(removeIngredient(uuid))
+    const handleDelete = (uuid: string) => {
+        let index = Number(uuid);
+        dispatch(removeIngredient(index));
     }
 
     return (
@@ -94,7 +96,7 @@ const AddedIngredient: React.FC<IAddedIngredient> = ({item , index}) => {
                 text={item.name}
                 price={item.price}
                 thumbnail={item.image}
-                handleClose={() => handleDelete(item.uuid)}
+                handleClose={() => handleDelete(String(item.uuid))}
             />
         </div>
     )
