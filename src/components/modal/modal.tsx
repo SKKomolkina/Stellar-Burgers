@@ -32,7 +32,7 @@ const Modal: React.FC<IModal> = ({children, isOpen, setIsOpen, close}) => {
    return modalContainer ? ReactDOM.createPortal(
        <div className={styles.visible}>
            <ModalOverlay close={close}>
-               <div className={`${styles.wrapper}`}>
+               <div id={'Modal'} className={`${styles.wrapper}`}>
                    <button
                        onClick={() => close()}
                        className={styles.button}>

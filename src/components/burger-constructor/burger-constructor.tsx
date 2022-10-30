@@ -7,7 +7,7 @@ import {ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-bu
 import {Button} from "../button-ui";
 import styles from './burger-constructor.module.css';
 
-import {addBun, addIngredient, resetConstructor} from "../../services/actions/constructor";
+import {addBun, addIngredient, removeIngredient, resetConstructor} from "../../services/actions/constructor";
 import AddedIngredient from "../added-ingredient/added-ingredient";
 import {sendItems} from "../../services/actions/order";
 import {useHistory} from "react-router-dom";

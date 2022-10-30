@@ -4,7 +4,7 @@ import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-compon
 import {useDispatch} from "../../services/hooks";
 import React, {useRef} from "react";
 
-import {removeIngredient} from "../../services/actions/constructor";
+import {removeIngredient, sortIngredients} from "../../services/actions/constructor";
 import {useDrag, useDrop} from "react-dnd";
 
 import {IIngredient} from '../../utils/interface/interface';
@@ -20,7 +20,8 @@ const AddedIngredient: React.FC<IAddedIngredient> = ({item , index}) => {
 
     const ref = useRef<HTMLDivElement>(null);
 
-    const [, drop] = useDrop({
+    // @ts-ignore
+    const [{}, drop] = useDrop({
         accept: ['SORT_INGREDIENT'],
         // collect(monitor) {
         //     return {
@@ -54,6 +55,7 @@ const AddedIngredient: React.FC<IAddedIngredient> = ({item , index}) => {
                 if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                     return;
                 }
+
                 // @ts-ignore
                 if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
                     return;
@@ -62,6 +64,7 @@ const AddedIngredient: React.FC<IAddedIngredient> = ({item , index}) => {
                 return;
             }
 
+            dispatch(sortIngredients(dragIndex, hoverIndex));
             // dispatch({
             //     type: SORT_ITEMS,
             //     payload: {
@@ -82,16 +85,15 @@ const AddedIngredient: React.FC<IAddedIngredient> = ({item , index}) => {
             isDragging: monitor.isDragging(),
         }),
     });
-    const opacity = isDragging ? 0 :1;
+    const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
 
     const handleDelete = (uuid: string) => {
-        let index = Number(uuid);
-        dispatch(removeIngredient(index));
+        dispatch(removeIngredient(uuid));
     }
 
     return (
-        <div ref={ref} style={{opacity}} className={`${styles.item} mb-4`}>
+        <div ref={drag} style={{opacity}} className={`${styles.item} mb-4`}>
             <ConstructorElement
                 text={item.name}
                 price={item.price}

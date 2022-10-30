@@ -13,7 +13,7 @@ type TIngredientsState = {
     itemsFailed: boolean;
 }
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
     ingredients: [],
 
     selectedIngredient: undefined,

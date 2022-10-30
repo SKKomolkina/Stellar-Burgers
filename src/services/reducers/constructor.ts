@@ -7,7 +7,7 @@ type TConstructorState = {
     bun: IIngredient | {};
 }
 
-const initialState: TConstructorState = {
+export const initialState: TConstructorState = {
     ingredients: [],
     bun: {},
 }
@@ -18,7 +18,7 @@ export const constructorReducer = (state = initialState, action: TConstructorAct
             return {
                 ...state,
                 ingredients: [...state.ingredients].filter(item =>
-                    Number(item.uuid) !== action.index)
+                    item.uuid !== action.index)
             }
         }
 
@@ -35,18 +35,18 @@ export const constructorReducer = (state = initialState, action: TConstructorAct
             }
         }
 
-        // case SORT_ITEMS: {
-        //     let items = [...state.ingredients];
-        //     items.splice(
-        //         action.items.to,
-        //         0,
-        //         items.splice(action.items.from, 1)[0]
-        //     );
-        //     return {
-        //         ...state,
-        //         ingredients: items,
-        //     }
-        // }
+        case SORT_ITEMS: {
+            let items = [...state.ingredients];
+            items.splice(
+                action.dragIndex,
+                0,
+                items.splice(action.hoverIndex, 1)[0]
+            );
+            return {
+                ...state,
+                ingredients: items,
+            }
+        }
 
         case RESET_CONSTRUCTOR: {
             return initialState;
