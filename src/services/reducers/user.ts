@@ -32,7 +32,7 @@ type TUserState = {
     forgotPassword: boolean,
 }
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
     user: {
         name: '',
         password: '',

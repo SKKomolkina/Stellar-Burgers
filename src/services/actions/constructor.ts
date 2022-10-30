@@ -1,4 +1,4 @@
-import {ADD_BUN, DELETE_ITEM, ADD_ITEM, RESET_CONSTRUCTOR, SORT_ITEMS} from "../constants/constructor";
+import {ADD_BUN, ADD_ITEM, DELETE_ITEM, RESET_CONSTRUCTOR, SORT_ITEMS} from "../constants/constructor";
 import {IIngredient} from "../../utils/interface/interface";
 
 //TYPES
@@ -14,7 +14,7 @@ export interface IAddBun {
 
 export interface IRemoveIngredient {
     readonly type: typeof DELETE_ITEM;
-    readonly index: number;
+    readonly index: string;
 }
 
 export interface IResetConstructor {
@@ -50,10 +50,18 @@ export function addBun(item: IIngredient, uuid: string): IAddBun {
     }
 }
 
-export function removeIngredient(uuid: number): IRemoveIngredient {
+export function removeIngredient(uuid: string): IRemoveIngredient {
     return {
         type: DELETE_ITEM,
         index: uuid,
+    }
+}
+
+export function sortIngredients(from: number, to: number): ISortIngredients {
+    return {
+        type: SORT_ITEMS,
+        dragIndex: from,
+        hoverIndex: to,
     }
 }
 
