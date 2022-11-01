@@ -5,7 +5,6 @@ import {IIngredient, IOrder} from "../../utils/interface/interface";
 import FeedItemImages from "./feed-item-images";
 import {getDate} from "../../utils/functions";
 
-
 const FeedItem: React.FC<{ item: IOrder, path: 'feed' | 'profile/orders', background: any }> =
     ({item, path, background}): JSX.Element => {
 
@@ -30,7 +29,7 @@ const FeedItem: React.FC<{ item: IOrder, path: 'feed' | 'profile/orders', backgr
 
         return (
             <Link className={styles.link} to={{pathname: `/${path}/${item._id}`, state: background}}>
-                <li key={item._id} className={styles.item}>
+                <li key={item._id + 1} className={styles.item}>
                     <div className={styles.info}>
                         <p className='text text_type_digits-default'>{`#${item.number}`}</p>
                         <p className='text text_type_main-default text_color_inactive'>{getDate(item.createdAt)}</p>
@@ -41,7 +40,7 @@ const FeedItem: React.FC<{ item: IOrder, path: 'feed' | 'profile/orders', backgr
                     {getStatus(item.status)}
 
                     <div className={styles.imagesContainer}>
-                        {item.details && item.details.slice(0, 6).map((i: any, index: number) => {
+                        {item.details && item.details.slice(0, 6).map((i, index) => {
                             if (overlay && index === 0) {
                                 return (
                                     <FeedItemImages key={index} image={i.image_mobile} name={i.name} count={count}/>

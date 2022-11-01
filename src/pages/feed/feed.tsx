@@ -5,9 +5,10 @@ import {wsConnectionStartAction, wsConnectionStopAction} from "../../services/ac
 import FeedItem from "../../components/feed-item/feed-item";
 import {IIngredient, IOrder} from "../../utils/interface/interface";
 import FeedItemInfo from "../../components/feed-item/feed-item-info";
-import {number} from "prop-types";
+
 import {useLocation} from "react-router-dom";
 import {getDetails} from "../../utils/functions";
+import {wsOrders} from "../../utils/urls";
 
 const Feed: React.FC = () => {
     const location = useLocation<any>();
@@ -18,6 +19,7 @@ const Feed: React.FC = () => {
 
     const getOrder = feed.map(i => {
         // console.log(ingredients)
+        // console.log(wsOrders)
         i.details = getDetails(ingredients, i.ingredients);
         return i;
     });
@@ -30,7 +32,7 @@ const Feed: React.FC = () => {
     const getPendingNum = getOrdersNum(feed.filter(i => i.status === 'pending'));
 
     useEffect(() => {
-        dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'));
+        dispatch(wsConnectionStartAction(`${wsOrders.url}/all`));
 
         return () => {
             dispatch(wsConnectionStopAction())
@@ -46,7 +48,7 @@ const Feed: React.FC = () => {
 
                 <ul className={styles.itemsContainer}>
                     { wsConnect &&
-                        getOrder.map((item: any) =>
+                        getOrder.map((item, index) =>
                             <FeedItem key={item._id} path='feed' background={location} item={item}/>
                         )
                     }

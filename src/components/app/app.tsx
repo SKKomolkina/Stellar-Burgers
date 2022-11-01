@@ -29,7 +29,7 @@ const App = ():JSX.Element => {
     const location = useLocation<{background: Location}>();
     const background = location.state && location.state.background;
 
-    const {userState, forgotPassword} = useSelector((state: any) => ({
+    const {userState, forgotPassword} = useSelector((state) => ({
         userState: state.user.authSuccess,
         forgotPassword: state.user.forgotPassword,
     }));

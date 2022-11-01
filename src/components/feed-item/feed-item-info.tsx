@@ -9,8 +9,8 @@ const FeedItemInfo: FC<{ done: number[], pending: number[], total: number, total
                 <div className={styles.inWorkTable}>
                     <h4 className={`${styles.inWorkTitle} text text_type_main-medium`}>Готовы:</h4>
                     <ul className={styles.inWorkText}>
-                        {done.map(num =>
-                            <li><p className={`text text_type_digits-default ${styles.colorText}`}>{num}</p></li>
+                        {done.map((num, index) =>
+                            <li key={index}><p className={`text text_type_digits-default ${styles.colorText}`}>{num}</p></li>
                         )}
                     </ul>
                 </div>
@@ -19,8 +19,8 @@ const FeedItemInfo: FC<{ done: number[], pending: number[], total: number, total
                     <h4 className={`${styles.inWorkTitle} text text_type_main-medium`}>В работе:</h4>
 
                     <ul className={styles.inWorkText}>
-                        {pending.map(num =>
-                            <li><p className='text text_type_digits-default'>{num}</p></li>
+                        {pending.map((num, index) =>
+                            <li key={index}><p className='text text_type_digits-default'>{num}</p></li>
                         )}
                     </ul>
                 </div>

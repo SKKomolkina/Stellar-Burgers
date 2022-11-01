@@ -57,11 +57,11 @@ export function removeIngredient(uuid: string): IRemoveIngredient {
     }
 }
 
-export function sortIngredients(from: number, to: number): ISortIngredients {
+export function sortIngredients(hoverIndex: number, dragIndex: number): ISortIngredients {
     return {
         type: SORT_ITEMS,
-        dragIndex: from,
-        hoverIndex: to,
+        hoverIndex: hoverIndex,
+        dragIndex: dragIndex,
     }
 }
 

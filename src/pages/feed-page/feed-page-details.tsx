@@ -8,6 +8,7 @@ import {getDate, getDetails, getPrice} from "../../utils/functions";
 import {wsConnectionStartAction, wsConnectionStopAction} from "../../services/actions/ws";
 import {getCookie} from "../../utils/utils";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {wsAll, wsOrders} from "../../utils/urls";
 
 const FeedPageDetails:FC = () => {
     const dispatch = useDispatch();
@@ -46,10 +47,10 @@ const FeedPageDetails:FC = () => {
         const back = location.state && location.state.background;
         const token = getCookie('accessToken');
 
-        !back && feedPage && dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'));
+        !back && feedPage && dispatch(wsConnectionStartAction(`${wsAll}`));
 
         // @ts-ignore
-        !back && profilePage && dispatch(wsConnectionStartAction(`wss://norma.nomoreparties.space/orders?token=${token.split(' ')[1]}`));
+        !back && profilePage && dispatch(wsConnectionStartAction(`${wsOrders.url}?token=${token.split(' ')[1]}`));
 
         return () => {
             back && dispatch(wsConnectionStopAction());
@@ -64,7 +65,7 @@ const FeedPageDetails:FC = () => {
 
             <p className='text text_type_digits-default'>Состав:</p>
             {selected.details && selected.details.map(i => (
-                <div className={styles.item}>
+                <div className={styles.item} key={i._id}>
                     <img className={styles.itemImage} src={i.image_mobile} alt={i.name}/>
                     <p className='text_type_main-default'>{i.name}</p>
 

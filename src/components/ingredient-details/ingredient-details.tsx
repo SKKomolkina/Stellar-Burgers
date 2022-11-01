@@ -1,8 +1,7 @@
 import styles from './ingredient-details.module.css';
 import {useDispatch, useSelector} from "../../services/hooks";
 import {useParams} from "react-router-dom";
-import React, {useEffect, useMemo, useState} from "react";
-import {getItems} from "../../services/actions/ingredients";
+import React, {useEffect, useState} from "react";
 import {IIngredient} from "../../utils/interface/interface";
 
 const IngredientDetails = () => {

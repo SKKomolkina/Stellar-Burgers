@@ -3,7 +3,7 @@ import {IIngredient} from "../../utils/interface/interface";
 import {GET_ITEMS_FAILED, GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, GET_SELECTED} from "../constants/ingredients";
 
 type TIngredientsState = {
-    ingredients: IIngredient[] | [];
+    ingredients: IIngredient[];
 
     selectedIngredient: IIngredient | undefined;
 
