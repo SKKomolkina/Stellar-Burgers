@@ -28,7 +28,6 @@ const FeedPageDetails:FC = () => {
     })
 
     const selected = getOrder.find(selected => selected._id === id);
-    console.log(selected);
 
     const getStatus = (status: 'created' | 'pending' | 'done'): JSX.Element => {
         switch (status) {
