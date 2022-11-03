@@ -46,7 +46,10 @@ export const feedReducer = (state = feedInitialState, action: TFeedActions): TFe
         }
 
         case WS_CONNECTION_CLOSE: {
-            return feedInitialState;
+            return {
+                ...state,
+                wsConnect: false,
+            }
         }
 
         case WS_GET_MESSAGE: {

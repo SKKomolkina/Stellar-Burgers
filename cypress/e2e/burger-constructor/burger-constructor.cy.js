@@ -145,6 +145,7 @@ describe('dragging items', () => {
             .trigger('dragenter')
             .trigger('dragover')
             .trigger('drop');
+        cy.wait(3000);
 
         cy.get('span').contains(`${sauce}`)
             .trigger('dragstart')
@@ -154,7 +155,7 @@ describe('dragging items', () => {
             .trigger('dragenter')
             .trigger('dragover', 'bottomRight')
             .trigger('drop', 'bottomRight');
-        cy.wait(3000);
+        cy.wait(5000);
 
         cy.get('span').contains(`${sauce}`)
             .trigger('dragstart')
@@ -164,5 +165,6 @@ describe('dragging items', () => {
             .trigger('dragenter')
             .trigger('dragover', 'topRight')
             .trigger('drop', 'topRight');
+        cy.wait(3000);
     })
 })

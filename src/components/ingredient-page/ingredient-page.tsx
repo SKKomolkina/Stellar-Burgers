@@ -36,22 +36,6 @@ const IngredientPage = () => {
         selected && setIngredient(selected);
     }, [id, ingredients]);
 
-    // console.log(ingredientId)
-    //
-    // const view = useMemo(() => {
-    //     let details = false;
-    //
-    //     if (ingredients) {
-    //         ingredients.forEach((i) => {
-    //             if (i._id === id) {
-    //                 details = true;
-    //             }
-    //         })
-    //     }
-    //
-    //     return details;
-    // }, [id, ingredients]);
-
     return (
         <main className={styles.main}>
             <div className={styles.container}>
