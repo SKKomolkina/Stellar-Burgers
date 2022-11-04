@@ -14,8 +14,6 @@ const Profile = () => {
         user: state.user,
     }));
 
-    console.log(user);
-
     const [nameValue, setNameValue] = useState<string>(user.user.name);
     const [emailValue, setEmailValue] = useState<string>(user.user.email);
     const [passwordValue, setPasswordValue] = useState<string>('');

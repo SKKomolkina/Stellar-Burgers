@@ -1,5 +1,5 @@
 import styles from './feed-page.module.css';
-import React, {FC, useEffect} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {useLocation, useParams, useRouteMatch} from "react-router-dom";
 import {useDispatch, useSelector} from "../../services/hooks";
 import {IIngredient, IOrder} from "../../utils/interface/interface";
@@ -8,26 +8,28 @@ import {getDate, getDetails, getPrice} from "../../utils/functions";
 import {wsConnectionStartAction, wsConnectionStopAction} from "../../services/actions/ws";
 import {getCookie} from "../../utils/utils";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {wsAll, wsOrders} from "../../utils/urls";
 
 const FeedPageDetails:FC = () => {
     const dispatch = useDispatch();
+    const {id} = useParams<{id: string}>();
+    const location = useLocation<any>();
 
-    const feed = useSelector(state => state.feed.feed);
+    const {feedItems} = useSelector((state) => ({feedItems: state.feed.feed}))
+    //
+
     const {ingredients} = useSelector(state => state.ingredients);
 
-    const location = useLocation<any>();
-    const {id} = useParams<{id: string}>();
-
-    const profilePage = useRouteMatch<any>('/profile');
+    const profilePage = useRouteMatch<any>('/profile/orders');
     const feedPage = useRouteMatch<any>('/feed');
 
-    const getOrder = feed.map(i => {
+    const getOrder = feedItems.map(i => {
         i.details = getDetails(ingredients, i.ingredients);
         return i;
     })
 
     const selected = getOrder.find(selected => selected._id === id);
-    console.log(selected);
+    console.log(feedItems);
 
     const getStatus = (status: 'created' | 'pending' | 'done'): JSX.Element => {
         switch (status) {
@@ -44,15 +46,17 @@ const FeedPageDetails:FC = () => {
 
     useEffect(() => {
         const back = location.state && location.state.background;
-        const token = getCookie('accessToken');
+        const token = getCookie('accessToken')?.split(' ')[1];
 
-        !back && feedPage && dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'));
+        !back && feedPage && dispatch(wsConnectionStartAction(`${wsAll.url}`));
 
-        // @ts-ignore
-        !back && profilePage && dispatch(wsConnectionStartAction(`wss://norma.nomoreparties.space/orders?token=${token.split(' ')[1]}`));
+        !back && profilePage && dispatch(wsConnectionStartAction(`wss://norma.nomoreparties.space/orders?token=${token}`));
 
+        console.log(back);
+        console.log(token);
+        console.log(profilePage)
         return () => {
-            back && dispatch(wsConnectionStopAction());
+            // back && dispatch(wsConnectionStopAction());
         }
     }, [dispatch])
 
@@ -64,7 +68,7 @@ const FeedPageDetails:FC = () => {
 
             <p className='text text_type_digits-default'>Состав:</p>
             {selected.details && selected.details.map(i => (
-                <div className={styles.item}>
+                <div className={styles.item} key={i._id}>
                     <img className={styles.itemImage} src={i.image_mobile} alt={i.name}/>
                     <p className='text_type_main-default'>{i.name}</p>
 

@@ -22,6 +22,7 @@ import IngredientPage from "../ingredient-page/ingredient-page";
 import Feed from "../../pages/feed/feed";
 import FeedPage from "../../pages/feed-page/feed-page";
 import FeedProfile from "../../pages/auth/feed-profile/feed-profile";
+import FeedPageDetails from "../../pages/feed-page/feed-page-details";
 
 const App = ():JSX.Element => {
     const dispatch = useDispatch();
@@ -29,17 +30,19 @@ const App = ():JSX.Element => {
     const location = useLocation<{background: Location}>();
     const background = location.state && location.state.background;
 
-    const {userState, forgotPassword} = useSelector((state: any) => ({
+    const {userState, forgotPassword} = useSelector((state) => ({
         userState: state.user.authSuccess,
         forgotPassword: state.user.forgotPassword,
     }));
 
     const [openOrder, setOpenOrder] = useState<boolean>(false);
     const [openInfo, setOpenInfo] = useState<boolean>(false);
+    const [openFeed, setOpenFeed] = useState<boolean>(false);
 
     const closeAllModals = () => {
         setOpenInfo(false);
         setOpenOrder(false);
+        setOpenFeed(false);
         history.goBack();
     }
 
@@ -48,7 +51,10 @@ const App = ():JSX.Element => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (!userState && getCookie('accessToken')) {
+        // if (!userState && getCookie('accessToken')) {
+        //     dispatch(getUser())
+        // }
+        if (!userState) {
             dispatch(getUser())
         }
     }, [userState]);
@@ -83,7 +89,7 @@ const App = ():JSX.Element => {
                 </ProtectedRoute>
 
                 <ProtectedRoute exact path='/profile/orders'>
-                    <FeedProfile />
+                    <FeedProfile openFeedModal={setOpenFeed} />
                 </ProtectedRoute>
 
                 <ProtectedRoute exact path='/profile/orders/:id'>
@@ -95,20 +101,34 @@ const App = ():JSX.Element => {
                 </Route>
 
                 <Route path='/feed' exact>
-                    <Feed/>
+                    <Feed openFeedModal={setOpenFeed} />
                 </Route>
 
-                <Route path='/feed/:id' exact>
+                <Route path='/feed/:id' exact={true}>
                     <FeedPage/>
                 </Route>
             </Switch>
 
             {background && (
+                <Switch>
                     <Route path='/ingredients/:id' children={
                         <Modal setIsOpen={setOpenInfo} isOpen={openInfo} close={closeAllModals}>
                             <IngredientDetails />
                         </Modal>
                     }/>
+
+                    <Route path='/feed/:id' children={
+                        <Modal setIsOpen={setOpenFeed} isOpen={openInfo} close={closeAllModals}>
+                            <FeedPageDetails />
+                        </Modal>
+                    }/>
+
+                    <Route path='/profile/orders/:id' children={
+                        <Modal setIsOpen={setOpenFeed} isOpen={openInfo} close={closeAllModals}>
+                            <FeedPageDetails />
+                        </Modal>
+                    }/>
+                </Switch>
             )}
 
             {openOrder ? (

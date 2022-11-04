@@ -38,9 +38,9 @@ export const constructorReducer = (state = initialState, action: TConstructorAct
         case SORT_ITEMS: {
             let items = [...state.ingredients];
             items.splice(
-                action.dragIndex,
+                action.hoverIndex,
                 0,
-                items.splice(action.hoverIndex, 1)[0]
+                items.splice(action.dragIndex, 1)[0]
             );
             return {
                 ...state,

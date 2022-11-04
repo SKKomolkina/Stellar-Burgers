@@ -1,5 +1,5 @@
 import styles from './feed-profile.module.css';
-import {FC, useEffect} from "react";
+import {Dispatch, FC, SetStateAction, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "../../../services/hooks";
 import {IOrder} from "../../../utils/interface/interface";
@@ -9,8 +9,13 @@ import FeedItem from "../../../components/feed-item/feed-item";
 import ProfileNav from "../../../components/profile-nav/profile-nav";
 import {wsConnectionStartAction, wsConnectionStopAction} from "../../../services/actions/ws";
 import {getCookie} from "../../../utils/utils";
+import {wsOrders} from "../../../utils/urls";
 
-const FeedProfile: FC = () => {
+interface IFeedProfileProps {
+    openFeedModal: Dispatch<SetStateAction<boolean>>;
+}
+
+const FeedProfile: FC<IFeedProfileProps> = ({openFeedModal}) => {
     const location = useLocation<any>();
     const dispatch = useDispatch();
 
@@ -25,7 +30,7 @@ const FeedProfile: FC = () => {
     useEffect(() => {
         const token = getCookie('accessToken');
         // @ts-ignore
-        dispatch(wsConnectionStartAction(`wss://norma.nomoreparties.space/orders?token=${token.split(' ')[1]}`));
+        dispatch(wsConnectionStartAction(`${wsOrders.url}?token=${token.split(' ')[1]}`));
 
         return () => {
             dispatch(wsConnectionStopAction());
@@ -38,7 +43,7 @@ const FeedProfile: FC = () => {
                 <ProfileNav/>
                 {feed ? (
                     <ul className={styles.feed}>
-                        {feedArr.map(i => <FeedItem item={i} path='profile/orders' key={i._id} background={location}/>)}
+                        {feedArr.map(i => <FeedItem openModal={openFeedModal} item={i} path='profile/orders' key={i._id} background={location}/>)}
                     </ul>
                 ) : null}
             </div>

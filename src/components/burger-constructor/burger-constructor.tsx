@@ -23,7 +23,7 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({openModal}): JSX.
     const history = useHistory();
 
     const {bun, ingredients} = useSelector((state: any) => state.orderConstructor);
-    const {authSuccess} = useSelector((state: any) => ({authSuccess: state.user.authSuccess}));
+    const {authSuccess} = useSelector((state) => ({authSuccess: state.user.authSuccess}));
 
     const ref = useRef(null);
 
